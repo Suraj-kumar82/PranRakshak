@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Medical Identification — PRANरक्षक</title>
+  <meta name="description" content="Verified public emergency medical profile. Critical allergies, blood group, medications, and instant emergency calling.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body style="background-color:#f4f7f6;">
+
+  <!-- Minimal Emergency Header -->
+  <header style="background:var(--color-deep-slate); color:#fff; padding:0.85rem 1.5rem; position:sticky; top:0; z-index:100; box-shadow:0 2px 10px rgba(0,0,0,0.15);">
+    <div style="max-width:800px; margin:0 auto; display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:0.6rem;">
+        <span class="brand-badge" style="width:32px; height:32px;">
+          <span data-icon="activity"></span>
+        </span>
+        <span style="font-weight:800; font-size:1.15rem; font-family:'Outfit', sans-serif;">PRAN<span style="color:var(--color-mint);">रक्षक</span></span>
+      </div>
+      <div class="badge badge-emergency" style="font-size:0.75rem;">
+        EMERGENCY MEDICAL ID
+      </div>
+    </div>
+  </header>
+
+  <!-- Emergency Profile Content Container -->
+  <main class="main-content" style="padding-top:1.5rem;">
+    <div style="max-width:800px; margin:0 auto; padding:0 1.25rem;">
+
+      <!-- High Priority Urgent Alert Banner -->
+      <div class="emergency-profile-banner">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <span data-icon="alertTriangle" style="width:28px; height:28px; flex-shrink:0;"></span>
+          <div>
+            <div style="font-size:1.05rem; font-weight:800; text-transform:uppercase; letter-spacing:0.02em;">
+              Emergency Medical Profile
+            </div>
+            <div style="font-size:0.825rem; opacity:0.95;">
+              If this person is unconscious, injured, or in distress, use the call buttons below immediately.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Emergency Calling Actions (2-Column Grid) -->
+      <div class="emergency-quick-dial-grid">
+        
+        <!-- Primary Contact Calling -->
+        <div class="quick-call-card-contact">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span class="badge badge-teal">PRIMARY FAMILY CONTACT</span>
+            <span data-icon="users" style="color:var(--color-teal-dark);"></span>
+          </div>
+          <div>
+            <div style="font-size:0.85rem; color:var(--color-cool-gray);">Emergency Guardian:</div>
+            <div id="pub-primary-contact-details" style="font-size:1.1rem; color:var(--color-deep-slate); margin-top:2px;">
+              Loading...
+            </div>
+          </div>
+          <a id="pub-call-primary-btn" href="tel:" class="btn btn-primary btn-lg" style="width:100%; font-size:1.1rem; font-weight:700;">
+            <span data-icon="phoneCall"></span> Call Family Now
+          </a>
+        </div>
+
+        <!-- 112 National Emergency Helpline -->
+        <div class="quick-call-card-112">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span class="badge badge-emergency">NATIONAL HELPLINE</span>
+            <span data-icon="ambulance" style="color:var(--color-emergency-red);"></span>
+          </div>
+          <div>
+            <div style="font-size:0.85rem; color:var(--color-emergency-red-dark);">Police / Ambulance / Fire:</div>
+            <div style="font-size:1.1rem; font-weight:800; color:var(--color-emergency-red); margin-top:2px;">
+              Emergency 112 (India)
+            </div>
+          </div>
+          <a href="tel:112" class="btn btn-emergency btn-lg" style="width:100%; font-size:1.1rem; font-weight:800;">
+            <span data-icon="phoneCall"></span> Dial 112 Emergency
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Patient Identity Header Card -->
+      <div class="card" style="margin-bottom:1.5rem; border-top:4px solid var(--color-deep-slate);">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h1 style="font-size:1.85rem; margin-bottom:0.25rem;" id="pub-patient-name">Aarav Sharma</h1>
+            <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap; font-size:0.9rem; color:var(--color-cool-gray);">
+              <span>ID: <strong id="pub-patient-id" style="color:var(--color-deep-slate); font-family:var(--font-mono);">PRAN-7429</strong></span>
+              <span>•</span>
+              <span id="pub-age-gender">30 yrs • Male</span>
+              <span>•</span>
+              <span class="badge badge-mint" id="pub-organ-donor">Organ Donor</span>
+            </div>
+          </div>
+
+          <div style="background:var(--color-mint-soft); border:1.5px solid var(--color-mint); border-radius:var(--radius-md); padding:0.75rem 1.25rem; text-align:center;">
+            <div style="font-size:0.75rem; font-weight:800; color:var(--color-cool-gray); text-transform:uppercase;">Blood Group</div>
+            <div style="font-size:2.2rem; font-weight:800; color:var(--color-emergency-red); line-height:1;" id="pub-blood-group">
+              B+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Critical Warnings & Allergies (HIGH PRIORITY) -->
+      <div class="card card-allergy-alert" style="margin-bottom:1.5rem;">
+        <div style="display:flex; align-items:center; gap:0.65rem; margin-bottom:0.75rem;">
+          <span data-icon="alertTriangle" style="color:var(--color-emergency-red);"></span>
+          <h3 style="color:var(--color-emergency-red-dark); margin:0;">
+            CRITICAL ALLERGIES & CONTRAINDICATIONS
+          </h3>
+        </div>
+
+        <p style="font-size:0.875rem; color:var(--color-emergency-red-dark); margin-bottom:0.75rem; font-weight:600;">
+          ATTENTION PARAMEDICS & PHYSICIANS: Do NOT administer medications containing these allergens:
+        </p>
+
+        <div class="allergies-chip-list" id="pub-allergies-list">
+          <!-- Injected via emergency-profile.js -->
+        </div>
+      </div>
+
+      <!-- Emergency Medical Instructions for Bystanders -->
+      <div class="card" style="margin-bottom:1.5rem; background:#fffcf6; border-left:5px solid #d97706;">
+        <div style="display:flex; align-items:center; gap:0.65rem; margin-bottom:0.65rem;">
+          <span data-icon="info" style="color:#d97706;"></span>
+          <h4 style="margin:0; color:#b45309;">Special Directives for Responders</h4>
+        </div>
+        <div style="font-size:0.95rem; color:var(--color-deep-slate); line-height:1.6;" id="pub-notes">
+          Loading instructions...
+        </div>
+      </div>
+
+      <!-- Chronic Conditions & Current Medications -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem;">
+        
+        <div class="card card-medications">
+          <div class="card-header" style="margin-bottom:0.75rem; padding-bottom:0.5rem;">
+            <h4 style="margin:0;">Current Routine Medications</h4>
+          </div>
+          <div class="meds-list" id="pub-meds-list">
+            <!-- Injected via emergency-profile.js -->
+          </div>
+        </div>
+
+        <div class="card" style="border-top:4px solid var(--color-dusty-blue);">
+          <div class="card-header" style="margin-bottom:0.75rem; padding-bottom:0.5rem;">
+            <h4 style="margin:0;">Existing Conditions</h4>
+          </div>
+          <div style="font-size:0.95rem; color:var(--color-deep-slate); font-weight:600;" id="pub-conditions">
+            Type 2 Diabetes Mellitus, Mild Asthma
+          </div>
+          <p style="font-size:0.825rem; color:var(--color-cool-gray); margin-top:0.75rem;">
+            Always verify vital signs (pulse, respiration, SpO2, blood sugar) prior to drug administration.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Clinical Resistance (MDR), Toxicity & Insurance Safety Card -->
+      <div class="card" style="margin-bottom:1.5rem; border-top:4px solid var(--color-teal); background:#fcfefd;">
+        <div class="card-header" style="margin-bottom:0.75rem; padding-bottom:0.5rem;">
+          <h4 style="margin:0; display:flex; align-items:center; gap:0.5rem;">
+            <span data-icon="shieldCheck" style="color:var(--color-teal-dark);"></span>
+            <span>Clinical Resistance (MDR), Toxicity & Cashless Insurance</span>
+          </h4>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:1rem;">
+          <div style="background:#fff; padding:0.75rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <div style="font-size:0.725rem; font-weight:700; text-transform:uppercase; color:var(--color-emergency-red);">MDR Resistance</div>
+            <div style="font-size:0.95rem; font-weight:700; color:var(--color-emergency-red);" id="pub-mdr">Negative / None</div>
+          </div>
+
+          <div style="background:#fff; padding:0.75rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <div style="font-size:0.725rem; font-weight:700; text-transform:uppercase; color:var(--color-cool-gray);">Drug Toxicity</div>
+            <div style="font-size:0.85rem; font-weight:600; color:var(--color-deep-slate);" id="pub-drug-tox">None Reported</div>
+          </div>
+
+          <div style="background:#fff; padding:0.75rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <div style="font-size:0.725rem; font-weight:700; text-transform:uppercase; color:var(--color-teal-dark);">Medical Insurance</div>
+            <div style="font-size:0.85rem; font-weight:700; color:var(--color-teal-dark);" id="pub-insurance">Star Health Cashless Active</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Emergency Contacts -->
+      <div class="card" style="margin-bottom:2rem;">
+        <h4 style="margin-bottom:0.75rem;">Additional Emergency Contacts</h4>
+        <div id="pub-secondary-contacts">
+          <!-- Injected via emergency-profile.js -->
+        </div>
+      </div>
+
+      <!-- Bottom Lifeline Actions -->
+      <div style="background:#ffffff; border:1px solid var(--border-light); border-radius:var(--radius-xl); padding:1.75rem; text-align:center; box-shadow:var(--shadow-md); margin-bottom:3rem;">
+        <h3 style="margin-bottom:0.5rem;">Need to dispatch an ambulance to this location?</h3>
+        <p style="max-width:540px; margin:0 auto 1.25rem;">
+          Launch our smart emergency dispatcher to pinpoint GPS coordinates and notify the nearest trauma hospital.
+        </p>
+        <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+          <a id="pub-req-ambulance-btn" href="emergency-assistance.html" class="btn btn-emergency btn-lg">
+            <span data-icon="ambulance"></span> Request Ambulance for this Patient
+          </a>
+          <button type="button" class="btn btn-secondary btn-lg" id="btn-notify-family">
+            <span data-icon="phone"></span> Broadcast SMS Alert to Family
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/emergency-profile.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      EmergencyProfileView.init();
+    });
+  </script>
+</body>
+</html>

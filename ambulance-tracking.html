@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Request Tracking — PRANरक्षक</title>
+  <meta name="description" content="Live emergency triage timeline, ambulance tracking, provider dispatch, and paramedic contact.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge" style="background:var(--color-teal);">
+          <span data-icon="activity"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Emergency Tracking</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="emergency-assistance.html" class="btn btn-secondary btn-sm">New Request</a>
+        <a href="tel:112" class="btn btn-emergency btn-sm">
+          <span data-icon="phoneCall"></span> 112 Hotline
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+      
+      <!-- Top Title Bar -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <h2>Emergency Request Tracking</h2>
+            <span id="track-status-pill" class="badge badge-emergency">AMBULANCE DISPATCHED</span>
+          </div>
+          <div style="font-size:0.9rem; color:var(--color-cool-gray); margin-top:2px;">
+            Ticket Reference: <strong id="track-req-id" style="color:var(--color-deep-slate); font-family:var(--font-mono);">EMG-8924</strong>
+          </div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <button class="btn btn-ghost btn-sm" id="btn-cancel-req" style="color:var(--color-emergency-red);">
+            Cancel Request
+          </button>
+          <a href="provider-dashboard.html" class="btn btn-secondary btn-sm" target="_blank" title="Open Hospital Portal">
+            Open Hospital View
+          </a>
+        </div>
+      </div>
+
+      <!-- Tracking Layout Grid -->
+      <div class="tracking-grid">
+        
+        <!-- Left: Route Simulation & Timeline -->
+        <div style="display:flex; flex-direction:column; gap:1.75rem;">
+          
+          <!-- Route Visualizer Panel -->
+          <div class="route-simulation-panel">
+            <div style="padding:1rem 1.25rem; border-bottom:1px solid var(--border-light); display:flex; align-items:center; justify-content:space-between; background:#fff;">
+              <div style="display:flex; align-items:center; gap:0.5rem; font-weight:700; color:var(--color-deep-slate);">
+                <span data-icon="navigation" style="color:var(--color-teal);"></span>
+                <span>Live GPS Route Tracker</span>
+              </div>
+              <div style="font-weight:800; font-family:var(--font-mono); color:var(--color-emergency-red); font-size:1.15rem;" id="countdown-timer">
+                05:42 ETA
+              </div>
+            </div>
+
+            <div class="simulated-map-display">
+              <div class="map-grid-overlay"></div>
+              <div class="map-radar-pulse"></div>
+
+              <!-- Animated Moving Ambulance Pin -->
+              <div class="ambulance-pin" id="sim-ambulance-pin" style="left: 30%; top: 40%;" title="ALS Ambulance #14">
+                <span data-icon="ambulance"></span>
+              </div>
+
+              <!-- Incident Destination Pin -->
+              <div class="destination-pin" title="Incident Location">
+                <span data-icon="mapPin"></span>
+              </div>
+            </div>
+
+            <div style="padding:0.85rem 1.25rem; background:var(--color-off-white); font-size:0.825rem; color:var(--color-cool-gray); display:flex; align-items:center; justify-content:space-between;">
+              <span>• Transmitting live telemetry from vehicle GPS unit</span>
+              <span style="color:var(--color-sage-dark); font-weight:700;">GPS Fix: High Accuracy</span>
+            </div>
+          </div>
+
+          <!-- 5-Stage Status Timeline Card -->
+          <div class="card">
+            <h3 style="margin-bottom:1rem;">Incident Progression Timeline</h3>
+            
+            <div class="timeline-track" id="timeline-container">
+              <!-- Rendered via tracking.js -->
+            </div>
+          </div>
+
+          <!-- Hackathon Demo Controls Banner (For Judges) -->
+          <div class="demo-controls-banner">
+            <div>
+              <div style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:#246d5c; letter-spacing:0.04em;">
+                Hackathon Evaluator Simulation Controls
+              </div>
+              <div style="font-size:0.825rem; color:var(--color-deep-slate);">
+                Advance the state to test transitions without waiting:
+              </div>
+            </div>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button class="btn btn-teal btn-sm" id="btn-advance-status" style="background:var(--color-teal); color:#fff;">
+                Advance Next Status ➔
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btn-reset-demo-req">
+                Reset Demo State
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: Incident & Dispatcher Info -->
+        <div style="display:flex; flex-direction:column; gap:1.5rem;">
+          
+          <!-- Dispatch Unit Card -->
+          <div class="card card-contacts-summary">
+            <div class="card-header">
+              <div class="card-title-group">
+                <div class="card-icon-badge">
+                  <span data-icon="ambulance"></span>
+                </div>
+                <div>
+                  <h3 class="card-title">Assigned Ambulance Unit</h3>
+                  <div class="card-subtitle">Advanced Life Support (ALS)</div>
+                </div>
+              </div>
+              <span class="badge badge-teal" id="track-eta-mins">6 MINS</span>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <div>
+                <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-cool-gray);">Unit Identifier</div>
+                <div style="font-size:1.05rem; font-weight:700; color:var(--color-deep-slate);" id="track-ambulance">LifeCare ALS #14</div>
+              </div>
+
+              <div>
+                <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-cool-gray);">Allocated Trauma Center</div>
+                <div style="font-size:0.95rem; font-weight:600; color:var(--color-deep-slate);" id="track-hospital">City General Trauma Center</div>
+              </div>
+
+              <div>
+                <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-cool-gray);">Paramedic Lead</div>
+                <div style="font-size:0.95rem; font-weight:600; color:var(--color-deep-slate);" id="track-paramedic">Ramesh Kumar (+91 98110 99887)</div>
+              </div>
+
+              <div style="margin-top:0.5rem; display:flex; gap:0.5rem;">
+                <a href="tel:+919811099887" class="btn btn-primary" style="flex:1;">
+                  <span data-icon="phoneCall"></span> Call Paramedic
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Incident Details Card -->
+          <div class="card">
+            <h3 style="margin-bottom:1rem;">Reported Incident Summary</h3>
+
+            <div style="display:flex; flex-direction:column; gap:0.85rem; font-size:0.9rem;">
+              <div>
+                <div style="font-size:0.75rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase;">Incident Category</div>
+                <div style="font-weight:700; color:var(--color-deep-slate);" id="track-incident-type">Road Accident</div>
+              </div>
+
+              <div>
+                <div style="font-size:0.75rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase;">Incident Location</div>
+                <div style="font-weight:600; color:var(--color-deep-slate);" id="track-location">Inner Circle, Block B, Connaught Place</div>
+              </div>
+
+              <div>
+                <div style="font-size:0.75rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase;">Callback Contact</div>
+                <div style="font-weight:600; color:var(--color-deep-slate);" id="track-callback-phone">+91 98765 43210</div>
+              </div>
+
+              <div>
+                <div style="font-size:0.75rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase;">Reported Time</div>
+                <div style="color:var(--color-cool-gray);" id="track-submitted-time">Just now</div>
+              </div>
+
+              <div style="background:var(--color-off-white); padding:0.75rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                <div style="font-size:0.75rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase; margin-bottom:2px;">Bystander Notes:</div>
+                <div style="font-size:0.85rem; color:var(--color-deep-slate);" id="track-desc">
+                  Two-wheeler collision at intersection. Helmet dislodged. Conscious but bleeding.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/tracking.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      TrackingManager.init();
+    });
+  </script>
+</body>
+</html>

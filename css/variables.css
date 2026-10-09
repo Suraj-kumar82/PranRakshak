@@ -1,0 +1,86 @@
+/**
+ * PRANरक्षक (Pran Rakshak) — Design System & Color Tokens
+ * Palette strictly conforms to official PRANरक्षक Healthcare Identity
+ */
+
+:root {
+  /* Brand Identity & Palette */
+  --color-teal: #5AA7A7;
+  --color-teal-dark: #438888;
+  --color-teal-light: #7cbdbd;
+  --color-teal-subtle: rgba(90, 167, 167, 0.12);
+  --color-teal-glow: rgba(90, 167, 167, 0.25);
+
+  --color-mint: #98D7C6;
+  --color-mint-light: #b4e4d7;
+  --color-mint-subtle: rgba(152, 215, 198, 0.2);
+  --color-mint-soft: #f0f9f6;
+
+  --color-dusty-blue: #7895B2;
+  --color-dusty-blue-dark: #5c7895;
+  --color-dusty-blue-subtle: rgba(120, 149, 178, 0.15);
+
+  --color-sage: #91A88D;
+  --color-sage-dark: #748b70;
+  --color-sage-subtle: rgba(145, 168, 141, 0.18);
+
+  --color-cool-gray: #68727D;
+  --color-cool-gray-light: #8e98a3;
+  --color-cool-gray-subtle: rgba(104, 114, 125, 0.1);
+
+  --color-silver: #D9DEE3;
+  --color-silver-light: #eef2f5;
+  --color-silver-dark: #b8c1c9;
+
+  --color-deep-slate: #273746;
+  --color-deep-slate-dark: #1b2732;
+  --color-deep-slate-light: #34495e;
+
+  --color-off-white: #F8FAF9;
+  --color-white: #FFFFFF;
+
+  --color-emergency-red: #C74343;
+  --color-emergency-red-dark: #a93232;
+  --color-emergency-red-light: #e06868;
+  --color-emergency-red-subtle: rgba(199, 67, 67, 0.12);
+  --color-emergency-red-glow: rgba(199, 67, 67, 0.35);
+
+  /* Functional Mappings */
+  --bg-page: var(--color-off-white);
+  --bg-surface: var(--color-white);
+  --bg-surface-elevated: #ffffff;
+  --bg-subtle: #f2f6f5;
+
+  --text-primary: var(--color-deep-slate);
+  --text-secondary: var(--color-cool-gray);
+  --text-muted: #8c97a4;
+  --text-inverse: #ffffff;
+
+  --border-light: var(--color-silver);
+  --border-subtle: rgba(217, 222, 227, 0.7);
+  --border-focus: var(--color-teal);
+
+  /* Typography */
+  --font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Elevation Shadows */
+  --shadow-xs: 0 1px 2px rgba(39, 55, 70, 0.05);
+  --shadow-sm: 0 2px 4px rgba(39, 55, 70, 0.06), 0 1px 2px rgba(39, 55, 70, 0.04);
+  --shadow-md: 0 4px 12px rgba(39, 55, 70, 0.08), 0 2px 4px rgba(39, 55, 70, 0.04);
+  --shadow-lg: 0 10px 25px rgba(39, 55, 70, 0.1), 0 4px 10px rgba(39, 55, 70, 0.05);
+  --shadow-xl: 0 20px 38px rgba(39, 55, 70, 0.14), 0 8px 16px rgba(39, 55, 70, 0.06);
+  --shadow-emergency: 0 0 25px rgba(199, 67, 67, 0.3);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Registration — PRANरक्षक</title>
+  <meta name="description" content="Register your secure medical profile and generate your life-saving QR identification card.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge">
+          <span data-icon="activity"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Smart Medical Lifeline</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="emergency-assistance.html" class="nav-emergency-btn">
+          <span class="pulse-dot"></span>
+          Emergency Assistance
+        </a>
+        <a href="login.html" class="btn btn-secondary btn-sm">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Auth Content -->
+  <main class="main-content">
+    <div class="auth-page-wrapper">
+      <div class="auth-card">
+        
+        <div class="auth-header">
+          <div class="card-icon-badge" style="background:var(--color-teal-subtle); color:var(--color-teal-dark); margin:0 auto 1rem; width:52px; height:52px;">
+            <span data-icon="shieldCheck"></span>
+          </div>
+          <h1>Create Your Medical Vault</h1>
+          <p>Register once, protect yourself everywhere. Generate your life-saving emergency QR ID.</p>
+        </div>
+
+        <!-- Demo Quick-Fill Box for Hackathon Reviewers -->
+        <div class="demo-account-box">
+          <div class="demo-account-title">Hackathon Reviewer Shortcut</div>
+          <div style="font-size:0.825rem; color:var(--color-deep-slate);">
+            Click below to instantly populate pre-verified demo patient credentials:
+          </div>
+          <div class="demo-account-buttons">
+            <button type="button" class="btn btn-mint btn-sm" id="btn-quick-fill">
+              Auto-Fill Demo Data (Aarav Sharma)
+            </button>
+          </div>
+        </div>
+
+        <form id="register-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="reg-name">
+              Full Legal Name <span class="required">*</span>
+            </label>
+            <div class="input-with-icon">
+              <span class="input-icon-left" data-icon="user"></span>
+              <input type="text" id="reg-name" class="form-input" placeholder="e.g. Aarav Sharma" required>
+            </div>
+            <div class="form-input-error" id="err-name" style="display:none;">Please enter your full legal name</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-email">
+              Email Address <span class="required">*</span>
+            </label>
+            <input type="email" id="reg-email" class="form-input" placeholder="name@example.com" required>
+            <div class="form-input-error" id="err-email" style="display:none;">Please enter a valid email address</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-phone">
+              Mobile Phone Number <span class="required">*</span>
+            </label>
+            <input type="tel" id="reg-phone" class="form-input" placeholder="+91 98765 43210" required>
+            <div class="form-input-error" id="err-phone" style="display:none;">Please enter a valid 10-digit mobile number</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-password">
+              Create Password <span class="required">*</span>
+            </label>
+            <div class="input-with-icon">
+              <input type="password" id="reg-password" class="form-input" placeholder="At least 6 characters" required>
+              <button type="button" class="input-icon-right" data-toggle-password="reg-password" aria-label="Toggle password visibility">
+                <span data-icon="eye"></span>
+              </button>
+            </div>
+            <div class="form-input-error" id="err-password" style="display:none;">Password must be at least 6 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="reg-confirm-password">
+              Confirm Password <span class="required">*</span>
+            </label>
+            <div class="input-with-icon">
+              <input type="password" id="reg-confirm-password" class="form-input" placeholder="Re-enter password" required>
+              <button type="button" class="input-icon-right" data-toggle-password="reg-confirm-password" aria-label="Toggle password visibility">
+                <span data-icon="eye"></span>
+              </button>
+            </div>
+            <div class="form-input-error" id="err-confirm-password" style="display:none;">Passwords do not match</div>
+          </div>
+
+          <div class="form-group" style="margin-top:1.25rem;">
+            <label style="display:flex; align-items:flex-start; gap:0.65rem; font-size:0.85rem; color:var(--text-secondary); cursor:pointer;">
+              <input type="checkbox" id="reg-consent" required style="margin-top:3px; accent-color:var(--color-teal);">
+              <span>
+                I consent to store and display my emergency medical parameters (blood group, critical allergies, contacts) upon physical QR scan in life-saving emergencies.
+              </span>
+            </label>
+            <div class="form-input-error" id="err-consent" style="display:none;">Consent is required to generate your emergency QR</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:1.5rem;" id="btn-submit-reg">
+            Register & Continue to Medical Profile
+          </button>
+        </form>
+
+        <div style="text-align:center; margin-top:1.5rem; font-size:0.9rem; color:var(--color-cool-gray);">
+          Already have an account? <a href="login.html" style="font-weight:700;">Sign In</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('register-form');
+      const quickFillBtn = document.getElementById('btn-quick-fill');
+
+      // Shortcut
+      if (quickFillBtn) {
+        quickFillBtn.addEventListener('click', () => {
+          document.getElementById('reg-name').value = 'Aarav Sharma';
+          document.getElementById('reg-email').value = 'aarav.sharma@example.com';
+          document.getElementById('reg-phone').value = '+91 98765 43210';
+          document.getElementById('reg-password').value = 'SecurePass123';
+          document.getElementById('reg-confirm-password').value = 'SecurePass123';
+          document.getElementById('reg-consent').checked = true;
+          UI.showToast('Demo patient details populated.', 'info');
+        });
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Simple validation
+        const name = document.getElementById('reg-name').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const phone = document.getElementById('reg-phone').value.trim();
+        const pass = document.getElementById('reg-password').value;
+        const confirmPass = document.getElementById('reg-confirm-password').value;
+        const consent = document.getElementById('reg-consent').checked;
+
+        let hasError = false;
+
+        const checkField = (condition, errId) => {
+          const el = document.getElementById(errId);
+          if (condition) {
+            el.style.display = 'block';
+            hasError = true;
+          } else {
+            el.style.display = 'none';
+          }
+        };
+
+        checkField(!name, 'err-name');
+        checkField(!email || !email.includes('@'), 'err-email');
+        checkField(!phone || phone.length < 10, 'err-phone');
+        checkField(!pass || pass.length < 6, 'err-password');
+        checkField(pass !== confirmPass, 'err-confirm-password');
+        checkField(!consent, 'err-consent');
+
+        if (hasError) return;
+
+        // Button loading
+        const btn = document.getElementById('btn-submit-reg');
+        btn.disabled = true;
+        btn.textContent = 'Creating Medical Vault...';
+
+        setTimeout(() => {
+          // Initialize patient in DataManager
+          const patient = DataManager.getPatient();
+          patient.fullName = name;
+          patient.email = email;
+          patient.phone = phone;
+          DataManager.savePatient(patient);
+
+          // Establish session
+          Auth.setSession({
+            id: patient.id,
+            fullName: patient.fullName,
+            email: patient.email,
+            role: 'patient'
+          });
+
+          UI.showToast('Registration successful! Welcome to PRANरक्षक.', 'success', 'Account Created');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 600);
+        }, 500);
+      });
+    });
+  </script>
+</body>
+</html>

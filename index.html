@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRANरक्षक — Smart Medical QR & Emergency Assistance Platform</title>
+  <meta name="description" content="Your Medical Identity. Your Lifeline. Instant emergency QR identification, vital health data access during the golden hour, and rapid ambulance dispatch.">
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge">
+          <span data-icon="activity"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Smart Medical Lifeline</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="dashboard.html" class="nav-link">Patient Portal</a></li>
+          <li><a href="provider-dashboard.html" class="nav-link">Hospital Triage</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="emergency-assistance.html" class="nav-emergency-btn">
+          <span class="pulse-dot"></span>
+          <span data-icon="alertTriangle"></span>
+          Emergency Assistance
+        </a>
+        <a href="login.html" class="btn btn-secondary btn-sm" id="nav-login-btn">Log In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+        <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+          <span data-icon="menu"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content" style="padding-top:0;">
+    
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="app-container">
+        <div class="hero-grid">
+          
+          <!-- Hero Text -->
+          <div>
+            <div class="hero-badge-pill">
+              <span data-icon="shieldCheck"></span>
+              Smart Medical Identification & Golden Hour SOS
+            </div>
+            <h1 class="hero-headline">
+              Your Medical Identity.<br>
+              <span class="text-gradient-teal">Your Lifeline.</span>
+            </h1>
+            <div class="hero-tagline">
+              Connecting Patients, Unknown Helpers & Trauma Centers in Real-Time
+            </div>
+            <p class="hero-desc">
+              When seconds decide survival, PRANरक्षक empowers bystanders, paramedics, and emergency doctors with instant access to your critical allergies, blood group, and emergency contacts through a tamper-proof medical QR card.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="register.html" class="btn btn-primary btn-lg">
+                Create Medical Profile
+                <span data-icon="arrowRight"></span>
+              </a>
+              <a href="emergency-assistance.html" class="btn btn-outline-emergency btn-lg">
+                <span data-icon="phoneCall"></span>
+                Emergency Assistance (112)
+              </a>
+              <a href="emergency.html?id=PRAN-7429" class="btn btn-secondary btn-lg" title="See what a bystander sees">
+                <span data-icon="eye"></span>
+                Scan Demo QR
+              </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="hero-trust-row">
+              <div class="trust-item">
+                <span data-icon="shield"></span>
+                <span>Zero Helper Login Required</span>
+              </div>
+              <div class="trust-item">
+                <span data-icon="clock"></span>
+                <span>&lt; 30s Golden Hour Response</span>
+              </div>
+              <div class="trust-item">
+                <span data-icon="droplet"></span>
+                <span>Allergies & Blood Group First</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Interactive QR Card Preview -->
+          <div class="hero-card-preview">
+            <div class="card-preview-backdrop"></div>
+            <div class="card-preview-inner">
+              <div class="preview-badge-floating">
+                <span data-icon="shieldCheck"></span> Live Wallet ID Preview
+              </div>
+              
+              <div class="medical-qr-card">
+                <div class="qr-card-header">
+                  <div class="qr-card-brand">
+                    <div class="qr-card-logo-icon">
+                      <span data-icon="activity"></span>
+                    </div>
+                    <div>
+                      <div class="qr-card-title-text">PRANरक्षक</div>
+                      <div style="font-size:0.65rem; color:var(--color-cool-gray); text-transform:uppercase; letter-spacing:0.04em;">Official Emergency Medical ID</div>
+                    </div>
+                  </div>
+                  <div class="qr-card-badge-emg">
+                    <span data-icon="droplet"></span> B+ POSITIVE
+                  </div>
+                </div>
+
+                <div class="qr-card-body">
+                  <div class="qr-card-patient-details">
+                    <div class="qr-card-name">Aarav Sharma</div>
+                    <div class="qr-card-id-row">
+                      <span>ID: PRAN-7429</span>
+                      <span>•</span>
+                      <span>30 yrs (Male)</span>
+                    </div>
+
+                    <div class="qr-card-allergy-box">
+                      <strong>⚠ CRITICAL ALLERGIES & CONTRAINDICATIONS:</strong>
+                      Penicillin (Severe Anaphylaxis), Peanuts
+                    </div>
+
+                    <div style="font-size:0.8rem; color:var(--color-deep-slate); background:#f0f7f6; padding:0.4rem 0.6rem; border-radius:var(--radius-sm); border:1px solid #cbe4de;">
+                      <strong>Emergency Contact:</strong> Priya Sharma (Spouse) • +91 98765 43210
+                    </div>
+                  </div>
+
+                  <div class="qr-card-qr-box">
+                    <div class="qr-code-frame" id="hero-qr-frame">
+                      <!-- Rendered via JS -->
+                    </div>
+                    <div class="qr-scan-instruction">Scan in Crisis</div>
+                  </div>
+                </div>
+
+                <div class="qr-card-footer">
+                  <div class="qr-security-seal">
+                    <span data-icon="shieldCheck"></span> VERIFIED PRAN PROFILE
+                  </div>
+                  <div>112 Emergency-Ready</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section" id="how-it-works">
+      <div class="app-container">
+        <div class="section-header">
+          <span class="section-tag">Rapid Workflow</span>
+          <h2 class="section-title">How PRANरक्षक Saves Lives</h2>
+          <p>A seamless, three-step bridge between unconscious patients, first responders, and emergency trauma centers.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number-badge">1</div>
+            <div class="feature-card-icon icon-teal" style="margin:0 auto 1.25rem;">
+              <span data-icon="user"></span>
+            </div>
+            <h3>1. Create Medical Profile</h3>
+            <p>Enter your blood group, life-threatening drug allergies, ongoing prescriptions, and emergency contacts into your encrypted vault.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number-badge">2</div>
+            <div class="feature-card-icon icon-mint" style="margin:0 auto 1.25rem;">
+              <span data-icon="qrCode"></span>
+            </div>
+            <h3>2. Carry Smart QR Card</h3>
+            <p>Generate your physical wallet card, helmet sticker, or phone lock-screen QR. No sensitive passwords or full medical records are exposed.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number-badge">3</div>
+            <div class="feature-card-icon icon-red" style="margin:0 auto 1.25rem;">
+              <span data-icon="ambulance"></span>
+            </div>
+            <h3>3. Responders Scan & Act</h3>
+            <p>Any unknown helper or paramedic scans the card with any standard phone camera. Zero login required to dial family or dispatch 112 with GPS.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Features Section -->
+    <section class="features-section" id="features">
+      <div class="app-container">
+        <div class="section-header">
+          <span class="section-tag">Engineered for the Golden Hour</span>
+          <h2 class="section-title">Critical Emergency Capabilities</h2>
+          <p>Built with healthcare architects to tackle India's most urgent emergency response gaps.</p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-card-icon icon-red">
+              <span data-icon="alertTriangle"></span>
+            </div>
+            <h3>Critical Allergy Warnings</h3>
+            <p>Prevents fatal medication errors. Paramedics immediately see anaphylactic alerts like Penicillin, Aspirin, or Sulfa before administering drugs.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-icon icon-teal">
+              <span data-icon="phoneCall"></span>
+            </div>
+            <h3>1-Tap Emergency Calling</h3>
+            <p>Bystanders can call the patient's spouse or family with a single tap, plus auto-generated WhatsApp/SMS location broadcasts.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-icon icon-blue">
+              <span data-icon="navigation"></span>
+            </div>
+            <h3>High-Accuracy Geolocation</h3>
+            <p>Auto-detects GPS coordinates of the accident scene so callers can read aloud exact latitude/longitude coordinates to the 112 operator.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-icon icon-mint">
+              <span data-icon="hospital"></span>
+            </div>
+            <h3>Hospital & Fleet Dispatch</h3>
+            <p>Connects civilian emergency requests directly to hospital triage desks, tracking Advanced Life Support (ALS) ambulances with live ETAs.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-icon icon-teal">
+              <span data-icon="printer"></span>
+            </div>
+            <h3>Printable Wallet Card</h3>
+            <p>High-resolution export to print wallet-sized emergency ID cards or helmet stickers that work even without cell coverage.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-card-icon icon-red">
+              <span data-icon="shield"></span>
+            </div>
+            <h3>Privacy-First Architecture</h3>
+            <p>Only life-saving emergency indicators are exposed to the public QR view. Routine private records remain securely protected.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Hackathon Interactive Simulation Banner -->
+    <section class="app-container">
+      <div class="simulation-cta-banner">
+        <div>
+          <span class="badge badge-mint" style="margin-bottom:0.75rem;">COLLEGE HACKATHON LIVE DEMO</span>
+          <h2>Explore Both Sides of the Platform</h2>
+          <p>
+            Test the entire emergency pipeline: register as a patient, generate a QR card, simulate an emergency bystander scan, and switch to the Hospital Dispatcher triage board to dispatch an ambulance!
+          </p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.75rem; flex-shrink:0;">
+          <a href="dashboard.html" class="btn btn-mint btn-lg">Open Patient Dashboard</a>
+          <a href="provider-dashboard.html" class="btn btn-secondary btn-lg">Open Hospital Triage</a>
+          <a href="emergency-assistance.html" class="btn btn-emergency btn-lg">Trigger SOS Assistance</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="app-container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-name">PRAN<span>रक्षक</span></div>
+          <p>Smart Medical Identification & Emergency Assistance Platform for the Golden Hour. Your Medical Identity. Your Lifeline.</p>
+          <div class="footer-emergency-callout">
+            <span data-icon="phoneCall" style="color:#ff8e8e;"></span>
+            <div>National Emergency Helpline: <strong>112 (India)</strong></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-heading">Platform</div>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="register.html">Patient Registration</a></li>
+            <li><a href="login.html">Patient Login</a></li>
+            <li><a href="dashboard.html">Medical Dashboard</a></li>
+            <li><a href="qr-card.html">Digital QR Card</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Emergency Services</div>
+          <ul class="footer-links">
+            <li><a href="emergency-assistance.html">Emergency Assistance</a></li>
+            <li><a href="emergency.html?id=PRAN-7429">Public Emergency Profile</a></li>
+            <li><a href="ambulance-tracking.html?id=EMG-8924">Ambulance Tracking</a></li>
+            <li><a href="provider-dashboard.html">Hospital Triage Portal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Compliance & Privacy</div>
+          <p style="font-size:0.85rem; color:var(--color-silver-dark); line-height:1.5;">
+            PRANरक्षक exposes only minimum necessary vital information (blood group, critical allergies, emergency contact) to save lives in crises.
+          </p>
+          <div style="margin-top:1rem; font-size:0.8rem; color:var(--color-cool-gray-light);">
+            Hackathon Demonstration Prototype • Non-production
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 PRANरक्षक Platform. All rights reserved. Built for emergency response innovation.</div>
+        <div style="display:flex; gap:1.5rem;">
+          <a href="#" style="color:var(--color-silver);">Privacy Policy</a>
+          <a href="#" style="color:var(--color-silver);">Terms of Service</a>
+          <a href="emergency-assistance.html" style="color:var(--color-mint);">Emergency Hotline: 112</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/vendor/qrcode.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Render demo QR code in the hero card
+      const heroFrame = document.getElementById('hero-qr-frame');
+      if (heroFrame) {
+        const origin = window.location.origin;
+        const pathname = window.location.pathname;
+        const dir = pathname.substring(0, pathname.lastIndexOf('/'));
+        const demoUrl = `${origin}${dir}/emergency.html?id=PRAN-7429`;
+        new QRCode(heroFrame, {
+          text: demoUrl,
+          width: 120,
+          height: 120,
+          colorDark: "#273746",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      }
+    });
+  </script>
+</body>
+</html>

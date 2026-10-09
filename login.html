@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Medical Intake & Login — PRANरक्षक</title>
+  <meta name="description" content="PRANरक्षक clinical intake and patient login synchronized directly with n8n emergency webhook and Supabase.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge">
+          <span data-icon="activity"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Medical Intake & Lifeline</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="emergency-assistance.html" class="nav-emergency-btn">
+          <span class="pulse-dot"></span>
+          Emergency Assistance
+        </a>
+        <a href="index.html" class="btn btn-secondary btn-sm">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Login & Clinical Intake Content -->
+  <main class="main-content">
+    <div class="app-container" style="display:flex; justify-content:center;">
+      <div class="auth-card auth-card-wide" style="margin: 1.5rem 0;">
+        
+        <!-- Header -->
+        <div class="auth-header" style="margin-bottom:1.5rem;">
+          <div class="card-icon-badge" style="background:var(--color-teal-subtle); color:var(--color-teal-dark); margin:0 auto 1rem; width:52px; height:52px;">
+            <span data-icon="activity"></span>
+          </div>
+          <h1>Patient Health Intake & Login</h1>
+          <p>
+            Connected to <strong>n8n Emergency Webhook</strong> & <strong>Supabase</strong> data layer.
+          </p>
+        </div>
+
+        <!-- Mode Switcher Tabs -->
+        <div class="auth-tabs-nav">
+          <button type="button" class="auth-tab-btn is-active" id="tab-btn-intake" onclick="switchAuthTab('intake')">
+            <span data-icon="shieldCheck"></span>
+            1. Clinical Medical Intake (n8n Webhook)
+          </button>
+          <button type="button" class="auth-tab-btn" id="tab-btn-login" onclick="switchAuthTab('login')">
+            <span data-icon="user"></span>
+            2. Existing Account Sign-in
+          </button>
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: CLINICAL MEDICAL INTAKE & N8N WEBHOOK DISPATCH FORM     -->
+        <!-- ============================================================== -->
+        <div id="section-intake-form">
+          
+          <!-- Webhook Endpoint Callout & 1-Click Auto-Fill -->
+          <div class="demo-account-box" style="margin-bottom:1.5rem; background:#f0f9f6; border-color:var(--color-teal);">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+              <div>
+                <div class="demo-account-title" style="color:var(--color-teal-dark);">
+                  🔗 Connected n8n Webhook Endpoint:
+                </div>
+                <code style="font-size:0.75rem; background:#fff; padding:2px 8px; border-radius:4px; border:1px solid #cbe4de; color:var(--color-deep-slate);">
+                  https://aizen56.app.n8n.cloud/webhook-test/emergency
+                </code>
+              </div>
+              <button type="button" class="btn btn-mint btn-sm" id="btn-autofill-intake" style="font-weight:700;">
+                <span data-icon="edit"></span> Auto-Fill Verified Clinical Data
+              </button>
+            </div>
+          </div>
+
+          <form id="clinical-intake-form" novalidate>
+            
+            <!-- Section A: Primary Patient Identity -->
+            <div style="border-bottom:1px solid var(--border-light); padding-bottom:1.25rem; margin-bottom:1.25rem;">
+              <div style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:var(--color-teal-dark); margin-bottom:1rem; display:flex; align-items:center; gap:0.4rem;">
+                <span data-icon="user"></span> 1. Basic Patient Details & Transfusion Parameters
+              </div>
+
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="form-label" for="intake-name">Full Patient Name <span class="required">*</span></label>
+                  <input type="text" id="intake-name" class="form-input" placeholder="e.g. Aarav Sharma" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="intake-age">Age (Years) <span class="required">*</span></label>
+                  <input type="number" id="intake-age" class="form-input" min="1" max="120" placeholder="30" required>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="intake-blood-group">Blood Group <span class="required">*</span></label>
+                  <select id="intake-blood-group" class="form-select" style="font-weight:700;">
+                    <option value="A+">A Positive (A+)</option>
+                    <option value="A-">A Negative (A-)</option>
+                    <option value="B+" selected>B Positive (B+)</option>
+                    <option value="B-">B Negative (B-)</option>
+                    <option value="AB+">AB Positive (AB+)</option>
+                    <option value="AB-">AB Negative (AB-)</option>
+                    <option value="O+">O Positive (O+)</option>
+                    <option value="O-">O Negative (O-)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="intake-allergies">
+                    Known Allergies & Anaphylaxis (if any)
+                  </label>
+                  <input type="text" id="intake-allergies" class="form-input" placeholder="e.g. Penicillin (Severe), Peanuts, Sulfa Drugs">
+                  <span class="form-input-help">High-priority warning displayed during trauma triage.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="intake-lifestyle">
+                    Lifestyle Habits (Alcohol, Tobacco, Substance)
+                  </label>
+                  <input type="text" id="intake-lifestyle" class="form-input" placeholder="e.g. Social Alcohol (1-2/wk), Non-smoker, No tobacco">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section B: Live BMI Calculator -->
+            <div style="border-bottom:1px solid var(--border-light); padding-bottom:1.25rem; margin-bottom:1.25rem; background:var(--color-off-white); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+                <div style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:var(--color-deep-slate); display:flex; align-items:center; gap:0.4rem;">
+                  <span data-icon="activity"></span> 2. Body Mass Index (BMI) Live Calculation
+                </div>
+                <div id="bmi-result-badge" class="badge badge-sage" style="font-size:0.825rem;">
+                  BMI: 23.5 (Normal)
+                </div>
+              </div>
+
+              <div class="form-grid-3">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="intake-height">Height (cm)</label>
+                  <input type="number" id="intake-height" class="form-input" placeholder="175" value="175">
+                </div>
+
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="intake-weight">Weight (kg)</label>
+                  <input type="number" id="intake-weight" class="form-input" placeholder="72" value="72">
+                </div>
+
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="intake-bmi-display">Calculated BMI Score</label>
+                  <input type="text" id="intake-bmi-display" class="form-input" value="23.5" readonly style="font-weight:700; background:#fff;">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section C: Critical Clinical History (MDR, Recent treatment, Surgical, Transplant) -->
+            <div style="border-bottom:1px solid var(--border-light); padding-bottom:1.25rem; margin-bottom:1.25rem;">
+              <div style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:var(--color-emergency-red); margin-bottom:1rem; display:flex; align-items:center; gap:0.4rem;">
+                <span data-icon="alertTriangle"></span> 3. Clinical Resistance & Surgical Profiles
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="intake-mdr">
+                    MDR (Multiple Drug Resistance) Status <span class="required">*</span>
+                  </label>
+                  <input type="text" id="intake-mdr" class="form-input" placeholder="e.g. None / Negative OR Suspected MDR-TB / MRSA" value="None (Negative for drug-resistant pathogens)" required>
+                  <span class="form-input-help">Crucial to isolate and prevent hospital-acquired infection spread.</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="intake-prev-history">
+                    Previous History (Recent Most Treatment)
+                  </label>
+                  <input type="text" id="intake-prev-history" class="form-input" placeholder="e.g. Treated for Acute Bronchitis (Aug 2025) with Amoxicillin">
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="intake-surgical-history">Surgical History</label>
+                  <textarea id="intake-surgical-history" class="form-textarea" rows="2" placeholder="e.g. Laparoscopic Appendectomy (2021). No cardiac stents."></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="intake-transplant-history">Transplant History</label>
+                  <textarea id="intake-transplant-history" class="form-textarea" rows="2" placeholder="e.g. None OR Renal/Kidney transplant (2020), taking Tacrolimus"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Section D: Drug Toxicity & Medical Insurance -->
+            <div style="margin-bottom:1.5rem;">
+              <div style="font-size:0.9rem; font-weight:800; text-transform:uppercase; color:var(--color-dusty-blue-dark); margin-bottom:1rem; display:flex; align-items:center; gap:0.4rem;">
+                <span data-icon="pill"></span> 4. Toxicity Warnings & Medical Insurance
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label class="form-label" for="intake-drug-toxicity">Drug Toxicity / Adverse Reactions</label>
+                  <input type="text" id="intake-drug-toxicity" class="form-input" placeholder="e.g. Mild rash to Ciprofloxacin; Nephrotoxicity risk with NSAIDs">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="intake-insurance">Medical Insurance & TPA Details</label>
+                  <input type="text" id="intake-insurance" class="form-input" placeholder="e.g. Star Health Comprehensive #SH-884102 (Cashless Active)">
+                  <span class="form-input-help">Enables immediate cashless trauma admission without hospital delays.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Action -->
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <button type="submit" class="btn btn-primary btn-lg" id="btn-submit-intake" style="font-size:1.05rem;">
+                <span data-icon="navigation"></span> Submit & Transmit to n8n Webhook
+              </button>
+            </div>
+
+          </form>
+
+          <!-- Live Webhook Monitor & Transmission Console -->
+          <div class="webhook-monitor-card" id="webhook-monitor" style="display:none;">
+            <div class="webhook-monitor-header">
+              <span>n8n Webhook Transmission Log</span>
+              <span id="webhook-status-badge" class="badge badge-mint" style="font-size:0.7rem;">DISPATCHED</span>
+            </div>
+            <div style="margin-bottom:0.5rem; color:#94a3b8; font-size:0.75rem;">
+              Target: <code style="color:#38bdf8;">https://aizen56.app.n8n.cloud/webhook-test/emergency</code>
+            </div>
+            <div style="margin-bottom:0.75rem; font-size:0.8rem;" id="webhook-result-text">
+              Payload successfully transmitted! Connecting to downstream Supabase workflow...
+            </div>
+            <div style="max-height:160px; overflow-y:auto; background:rgba(0,0,0,0.3); padding:0.6rem; border-radius:4px; font-size:0.75rem;">
+              <pre id="webhook-payload-preview" style="margin:0; white-space:pre-wrap;"></pre>
+            </div>
+
+            <div style="margin-top:1rem; display:flex; justify-content:flex-end;">
+              <button type="button" class="btn btn-mint btn-sm" onclick="window.location.href='dashboard.html'" style="font-weight:700;">
+                Proceed to Patient Dashboard ➔
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: EXISTING ACCOUNT QUICK SIGN-IN                          -->
+        <!-- ============================================================== -->
+        <div id="section-login-form" style="display:none;">
+          
+          <div class="demo-account-box">
+            <div class="demo-account-title">1-Click Fast Track (For Evaluators)</div>
+            <div style="font-size:0.825rem; color:var(--color-deep-slate); margin-bottom:0.35rem;">
+              Instant sign-in without typing credentials:
+            </div>
+            <div class="demo-account-buttons">
+              <button type="button" class="btn btn-teal btn-sm" onclick="Auth.loginAsDemoPatient()" style="background:var(--color-teal); color:#fff;">
+                <span data-icon="user"></span> Demo Patient (Aarav Sharma)
+              </button>
+              <button type="button" class="btn btn-dusty btn-sm" onclick="Auth.loginAsDemoProvider()">
+                <span data-icon="hospital"></span> Trauma Dispatcher
+              </button>
+            </div>
+          </div>
+
+          <form id="login-form" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="login-email">Email Address</label>
+              <div class="input-with-icon">
+                <span class="input-icon-left" data-icon="user"></span>
+                <input type="email" id="login-email" class="form-input" placeholder="aarav.sharma@example.com" value="aarav.sharma@example.com" required>
+              </div>
+              <div class="form-input-error" id="err-login-email" style="display:none;">Please enter your email</div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <label for="login-password">Password</label>
+                <a href="#" style="font-size:0.8rem; color:var(--color-teal);" onclick="alert('In demo mode, any password will sign in!'); return false;">Forgot?</a>
+              </div>
+              <div class="input-with-icon">
+                <input type="password" id="login-password" class="form-input" placeholder="••••••••••••" value="DemoPass123" required>
+                <button type="button" class="input-icon-right" data-toggle-password="login-password" aria-label="Toggle password visibility">
+                  <span data-icon="eye"></span>
+                </button>
+              </div>
+              <div class="form-input-error" id="err-login-password" style="display:none;">Please enter your password</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:1.25rem;" id="btn-submit-login">
+              Sign In to Dashboard
+            </button>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    function switchAuthTab(tab) {
+      const intakeSec = document.getElementById('section-intake-form');
+      const loginSec = document.getElementById('section-login-form');
+      const intakeBtn = document.getElementById('tab-btn-intake');
+      const loginBtn = document.getElementById('tab-btn-login');
+
+      if (tab === 'intake') {
+        intakeSec.style.display = 'block';
+        loginSec.style.display = 'none';
+        intakeBtn.classList.add('is-active');
+        loginBtn.classList.remove('is-active');
+      } else {
+        intakeSec.style.display = 'none';
+        loginSec.style.display = 'block';
+        intakeBtn.classList.remove('is-active');
+        loginBtn.classList.add('is-active');
+      }
+    }
+
+    // Live BMI Calculation
+    function updateBmiLive() {
+      const height = document.getElementById('intake-height').value;
+      const weight = document.getElementById('intake-weight').value;
+      const result = DataManager.calculateBmi(height, weight);
+      
+      const display = document.getElementById('intake-bmi-display');
+      const badge = document.getElementById('bmi-result-badge');
+
+      if (display) display.value = result.bmi;
+      if (badge) {
+        badge.textContent = `BMI: ${result.bmi} (${result.category})`;
+        badge.style.color = result.color;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Bind BMI listeners
+      const heightInput = document.getElementById('intake-height');
+      const weightInput = document.getElementById('intake-weight');
+      if (heightInput) heightInput.addEventListener('input', updateBmiLive);
+      if (weightInput) weightInput.addEventListener('input', updateBmiLive);
+      updateBmiLive();
+
+      // Auto-fill button for quick testing
+      const autofillBtn = document.getElementById('btn-autofill-intake');
+      if (autofillBtn) {
+        autofillBtn.addEventListener('click', () => {
+          const patient = DataManager.getPatient();
+          document.getElementById('intake-name').value = patient.fullName || 'Aarav Sharma';
+          document.getElementById('intake-age').value = patient.age || 30;
+          document.getElementById('intake-blood-group').value = patient.bloodGroup || 'B+';
+          document.getElementById('intake-allergies').value = 'Penicillin (Severe Anaphylaxis), Peanuts';
+          document.getElementById('intake-lifestyle').value = 'Occasional Alcohol (Social), Non-smoker, Regular runner';
+          document.getElementById('intake-height').value = 175;
+          document.getElementById('intake-weight').value = 72;
+          document.getElementById('intake-mdr').value = 'None (Negative for drug-resistant pathogens)';
+          document.getElementById('intake-prev-history').value = 'Treated for Acute Viral Bronchitis (Aug 2025). Full recovery.';
+          document.getElementById('intake-surgical-history').value = 'Laparoscopic Appendectomy (August 2021). No cardiac stents.';
+          document.getElementById('intake-transplant-history').value = 'None (No organ/tissue transplants)';
+          document.getElementById('intake-drug-toxicity').value = 'Reported mild cutaneous rash to Ciprofloxacin (2022)';
+          document.getElementById('intake-insurance').value = 'Star Health Comprehensive #SH-884102 (Cashless Active, TPA: MediAssist)';
+          updateBmiLive();
+          UI.showToast('Pre-verified clinical parameters auto-filled!', 'info');
+        });
+      }
+
+      // Handle Clinical Intake Form Submission to n8n Webhook
+      const intakeForm = document.getElementById('clinical-intake-form');
+      if (intakeForm) {
+        intakeForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById('intake-name').value.trim();
+          const age = parseInt(document.getElementById('intake-age').value, 10);
+          const bloodGroup = document.getElementById('intake-blood-group').value;
+          const allergies = document.getElementById('intake-allergies').value.trim();
+          const lifestyle = document.getElementById('intake-lifestyle').value.trim();
+          const height = document.getElementById('intake-height').value;
+          const weight = document.getElementById('intake-weight').value;
+          const bmiInfo = DataManager.calculateBmi(height, weight);
+          const mdr = document.getElementById('intake-mdr').value.trim();
+          const prevHistory = document.getElementById('intake-prev-history').value.trim();
+          const surgical = document.getElementById('intake-surgical-history').value.trim();
+          const transplant = document.getElementById('intake-transplant-history').value.trim();
+          const toxicity = document.getElementById('intake-drug-toxicity').value.trim();
+          const insurance = document.getElementById('intake-insurance').value.trim();
+
+          if (!name || isNaN(age)) {
+            UI.showToast('Please provide your name and age.', 'error');
+            return;
+          }
+
+          const submitBtn = document.getElementById('btn-submit-intake');
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `Transmitting to n8n Webhook...`;
+
+          // Construct Structured Payload
+          const payload = {
+            event: "patient_medical_intake",
+            patient_id: "PRAN-7429",
+            name: name,
+            age: age,
+            blood_group: bloodGroup,
+            allergies: allergies || "None reported",
+            lifestyle_habits: lifestyle || "Not specified",
+            height_cm: parseFloat(height) || null,
+            weight_kg: parseFloat(weight) || null,
+            bmi: bmiInfo.bmi,
+            bmi_category: bmiInfo.category,
+            mdr: mdr || "Negative",
+            previous_history: prevHistory || "None",
+            surgical_history: surgical || "None",
+            transplant_history: transplant || "None",
+            drug_toxicity: toxicity || "None reported",
+            medical_insurance: insurance || "Not documented",
+            submitted_at: new Date().toISOString()
+          };
+
+          // Save to local Patient model
+          const patient = DataManager.getPatient();
+          patient.fullName = name;
+          patient.age = age;
+          patient.bloodGroup = bloodGroup;
+          patient.conditions = `Lifestyle: ${lifestyle || 'Normal'}`;
+          patient.medicalHistory = `Surgical: ${surgical} | Prev: ${prevHistory}`;
+          patient.emergencyNotes = `MDR: ${mdr} | Drug Tox: ${toxicity} | Transplant: ${transplant}`;
+          patient.bmi = `${bmiInfo.bmi} (${bmiInfo.category})`;
+          patient.heightCm = height;
+          patient.weightKg = weight;
+          patient.lifestyleHabits = lifestyle;
+          patient.mdr = mdr;
+          patient.previousHistory = prevHistory;
+          patient.surgicalHistory = surgical;
+          patient.transplantHistory = transplant;
+          patient.drugToxicity = toxicity;
+          patient.medicalInsurance = insurance;
+          DataManager.savePatient(patient);
+
+          // Establish logged-in session
+          Auth.setSession({
+            id: patient.id,
+            fullName: patient.fullName,
+            email: patient.email || 'aarav.sharma@example.com',
+            role: 'patient'
+          });
+
+          // Send to n8n Webhook
+          const res = await DataManager.sendToN8nWebhook(payload);
+
+          // Display in Live Monitor Box
+          const monitor = document.getElementById('webhook-monitor');
+          const preview = document.getElementById('webhook-payload-preview');
+          const statusBadge = document.getElementById('webhook-status-badge');
+          const resultText = document.getElementById('webhook-result-text');
+
+          monitor.style.display = 'block';
+          preview.textContent = JSON.stringify(payload, null, 2);
+
+          if (res.success) {
+            statusBadge.className = 'badge badge-sage';
+            statusBadge.textContent = 'DELIVERED (HTTP ' + (res.status || '200') + ')';
+            resultText.innerHTML = `<span style="color:var(--color-mint); font-weight:700;">✔ Successfully delivered to n8n webhook!</span> Ready for Supabase ingestion.`;
+            UI.showToast('Clinical profile successfully sent to n8n webhook!', 'success', 'n8n Webhook Synced');
+          } else {
+            statusBadge.className = 'badge badge-emergency';
+            statusBadge.textContent = 'ERROR / CORS NOTICE';
+            resultText.innerHTML = `<span style="color:var(--color-emergency-red); font-weight:700;">Notice:</span> Transmitted (n8n test webhook waiting for active execution). Data safely saved locally!`;
+            UI.showToast('Sent to webhook (saved in local vault).', 'info');
+          }
+
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<span data-icon="check"></span> Successfully Transmitted`;
+          renderIcons();
+        });
+      }
+
+      // Existing Account Login Form
+      const loginForm = document.getElementById('login-form');
+      if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('login-email').value.trim();
+          const pass = document.getElementById('login-password').value;
+
+          if (!email || !pass) {
+            UI.showToast('Please enter your email and password.', 'warning');
+            return;
+          }
+
+          const btn = document.getElementById('btn-submit-login');
+          btn.disabled = true;
+          btn.textContent = 'Signing in...';
+
+          setTimeout(() => {
+            const patient = DataManager.getPatient();
+            Auth.setSession({
+              id: patient.id,
+              fullName: patient.fullName,
+              email: email,
+              role: 'patient'
+            });
+            UI.showToast(`Signed in as ${patient.fullName}`, 'success');
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 400);
+          }, 300);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

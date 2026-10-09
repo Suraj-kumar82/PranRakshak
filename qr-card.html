@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Medical QR Card — PRANरक्षक</title>
+  <meta name="description" content="Official printable digital medical identification card with secure QR code for wallet and helmet application.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-navbar no-print">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge">
+          <span data-icon="activity"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Digital Medical Card</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-secondary btn-sm">
+          <span data-icon="arrowLeft"></span> Back to Dashboard
+        </a>
+        <a href="emergency.html?id=PRAN-7429" target="_blank" class="btn btn-primary btn-sm">
+          <span data-icon="eye"></span> Test Live Scan
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+      
+      <!-- Top Actions Bar -->
+      <div class="no-print" style="margin-bottom:2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.25rem;">
+        <div>
+          <h2>Your Digital Emergency QR Identification</h2>
+          <p>Carry this card in your physical wallet, save as phone lock screen, or attach as a helmet decal.</p>
+        </div>
+
+        <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+          <button class="btn btn-primary" id="btn-download-qr-card">
+            <span data-icon="download"></span> Download Wallet PNG
+          </button>
+          <button class="btn btn-secondary" id="btn-print-qr-card">
+            <span data-icon="printer"></span> Print Wallet Card
+          </button>
+          <button class="btn btn-ghost" id="btn-copy-qr-link">
+            <span data-icon="copy"></span> Copy Public Link
+          </button>
+        </div>
+      </div>
+
+      <!-- Physical Wallet Card Container -->
+      <div class="wallet-card-container">
+        <div class="medical-qr-card">
+          
+          <div class="qr-card-header">
+            <div class="qr-card-brand">
+              <div class="qr-card-logo-icon">
+                <span data-icon="activity"></span>
+              </div>
+              <div>
+                <div class="qr-card-title-text">PRANरक्षक</div>
+                <div style="font-size:0.65rem; color:var(--color-cool-gray); text-transform:uppercase; letter-spacing:0.04em;">
+                  Digital Emergency Medical Identification
+                </div>
+              </div>
+            </div>
+
+            <div class="qr-card-badge-emg">
+              <span data-icon="droplet"></span>
+              <span id="card-blood-type">B+</span>
+            </div>
+          </div>
+
+          <div class="qr-card-body">
+            <div class="qr-card-patient-details">
+              <div class="qr-card-name" id="card-patient-name">Aarav Sharma</div>
+              
+              <div class="qr-card-id-row">
+                <span>PATIENT ID: <strong id="card-patient-id" style="color:var(--color-deep-slate);">PRAN-7429</strong></span>
+                <span>•</span>
+                <span>VERIFIED</span>
+              </div>
+
+              <div class="qr-card-allergy-box" id="card-allergies-summary">
+                <strong>⚠ CRITICAL ALLERGIES & CONTRAINDICATIONS:</strong>
+                Penicillin (Severe), Peanuts (Moderate)
+              </div>
+
+              <div style="font-size:0.8rem; background:#f0f7f6; padding:0.45rem 0.65rem; border-radius:var(--radius-sm); border:1px solid #cbe4de; color:var(--color-deep-slate);" id="card-emergency-contact">
+                Emergency Contact: Priya Sharma (Spouse) • +91 98765 43210
+              </div>
+            </div>
+
+            <div class="qr-card-qr-box">
+              <div class="qr-code-frame" id="qr-code-element">
+                <!-- QR Code generated via qrcode.js -->
+              </div>
+              <div class="qr-scan-instruction">Scan in Emergency</div>
+            </div>
+          </div>
+
+          <div class="qr-card-footer">
+            <div class="qr-security-seal">
+              <span data-icon="shieldCheck"></span>
+              <span>TAMPER-RESISTANT MEDICAL RECORD</span>
+            </div>
+            <div>Helpline: <strong>112 (India)</strong></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Instructions & Privacy Box -->
+      <div class="no-print" style="max-width:720px; margin:2.5rem auto 0; background:#ffffff; border:1px solid var(--border-light); border-radius:var(--radius-lg); padding:1.75rem; box-shadow:var(--shadow-sm);">
+        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1rem;">
+          <div class="card-icon-badge" style="background:var(--color-teal-subtle); color:var(--color-teal-dark);">
+            <span data-icon="shield"></span>
+          </div>
+          <div>
+            <h4 style="margin:0;">Emergency Privacy Protection</h4>
+            <div style="font-size:0.825rem; color:var(--color-cool-gray);">Architecture compliant with healthcare security standards</div>
+          </div>
+        </div>
+
+        <ul style="font-size:0.9rem; color:var(--text-secondary); line-height:1.6; padding-left:1.25rem;">
+          <li>
+            <strong>Minimum Necessary Disclosure:</strong> When scanned by a bystander or paramedic, this card reveals only life-saving parameters (blood group, allergies, emergency contacts, active prescriptions).
+          </li>
+          <li>
+            <strong>Zero Login Friction:</strong> Unknown helpers never need to download an app or log in to view the emergency medical card or call your primary contact.
+          </li>
+          <li>
+            <strong>Offline Readiness:</strong> You can carry the physical printed card in your wallet, motorcycle helmet, or gym wristband.
+          </li>
+        </ul>
+
+        <div style="margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--border-light); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; font-size:0.85rem;">
+          <div>
+            <span style="color:var(--color-cool-gray);">Emergency Profile URL:</span>
+            <code id="emergency-url-display" style="background:var(--color-off-white); padding:2px 6px; border-radius:4px; font-size:0.8rem; margin-left:4px;">--</code>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-refresh-qr">
+            Regenerate QR
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/vendor/qrcode.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/qr-card.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (Auth.requireAuth('patient')) {
+        QRCardManager.init();
+      }
+    });
+  </script>
+</body>
+</html>

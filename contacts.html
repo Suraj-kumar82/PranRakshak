@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Contacts — PRANरक्षक</title>
+  <meta name="description" content="Manage primary and secondary emergency contacts alerted when your PRANरक्षक QR card is scanned.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge">
+          <span data-icon="activity"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Emergency Contacts</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-secondary btn-sm">
+          <span data-icon="arrowLeft"></span> Back to Dashboard
+        </a>
+        <button class="btn btn-primary btn-sm" id="btn-open-add-contact">
+          <span data-icon="plus"></span> Add New Contact
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+      <div class="dashboard-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="dashboard-sidebar">
+          <ul class="sidebar-menu">
+            <li class="sidebar-menu-item">
+              <a href="dashboard.html">
+                <span data-icon="activity"></span>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="profile.html">
+                <span data-icon="user"></span>
+                <span>Medical Profile</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="contacts.html" class="active">
+                <span data-icon="users"></span>
+                <span>Emergency Contacts</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="qr-card.html">
+                <span data-icon="qrCode"></span>
+                <span>My Emergency QR</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item" style="margin-top:1rem; border-top:1px solid var(--border-light); padding-top:1rem;">
+              <a href="emergency-assistance.html">
+                <span data-icon="ambulance" style="color:var(--color-emergency-red);"></span>
+                <span style="color:var(--color-emergency-red); font-weight:700;">Ambulance SOS</span>
+              </a>
+            </li>
+          </ul>
+
+          <div style="margin-top:2rem; padding:1rem; background:var(--color-teal-subtle); border-radius:var(--radius-md); border:1px solid var(--color-teal);">
+            <div style="font-size:0.75rem; font-weight:800; color:var(--color-teal-dark); text-transform:uppercase;">Golden Hour Tip</div>
+            <div style="font-size:0.85rem; color:var(--color-deep-slate); margin-top:4px;">
+              Your Primary Contact is given the prominent 1-tap call button on the public emergency QR scan page.
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Contacts Area -->
+        <div class="dashboard-main-area">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <h2>Emergency Contacts Network</h2>
+              <p>People who will be contacted immediately by bystanders, paramedics, or trauma staff.</p>
+            </div>
+            <button class="btn btn-primary" onclick="ContactsManager.openAddModal()">
+              <span data-icon="plus"></span> Add Contact
+            </button>
+          </div>
+
+          <!-- Dynamic List Container -->
+          <div id="contacts-list-container">
+            <!-- Injected via contacts.js -->
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Add / Edit Contact Modal -->
+  <div class="modal-backdrop" id="contact-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="contact-modal-title">Add Emergency Contact</h3>
+        <button type="button" class="modal-close-btn" data-modal-close aria-label="Close">✕</button>
+      </div>
+
+      <form id="contact-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="contact-name">Contact Full Name <span class="required">*</span></label>
+            <input type="text" id="contact-name" class="form-input" placeholder="e.g. Priya Sharma" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-relation">Relationship <span class="required">*</span></label>
+            <select id="contact-relation" class="form-select">
+              <option value="Spouse">Spouse / Partner</option>
+              <option value="Parent">Parent (Mother / Father)</option>
+              <option value="Sibling">Sibling (Brother / Sister)</option>
+              <option value="Child">Child (Son / Daughter)</option>
+              <option value="Doctor">Primary Care Physician / Doctor</option>
+              <option value="Friend">Trusted Friend / Colleague</option>
+              <option value="Other">Other Emergency Guardian</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-phone">Primary Mobile Phone <span class="required">*</span></label>
+            <input type="tel" id="contact-phone" class="form-input" placeholder="+91 98765 43210" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-alt-phone">Alternate Phone (Optional)</label>
+            <input type="tel" id="contact-alt-phone" class="form-input" placeholder="+91 98765 43211">
+          </div>
+
+          <div style="margin-top:1rem; padding:0.75rem; background:var(--color-off-white); border-radius:var(--radius-md); border:1px solid var(--border-light);">
+            <label style="display:flex; align-items:center; gap:0.6rem; cursor:pointer; font-size:0.9rem; font-weight:600; color:var(--color-deep-slate);">
+              <input type="checkbox" id="contact-is-primary" style="accent-color:var(--color-teal); width:18px; height:18px;">
+              <span>Set as Primary Emergency Contact (Displayed first)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Contact</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/contacts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (Auth.requireAuth('patient')) {
+        ContactsManager.init();
+      }
+    });
+  </script>
+</body>
+</html>

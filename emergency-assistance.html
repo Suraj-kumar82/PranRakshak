@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Medical Assistance — PRANरक्षक</title>
+  <meta name="description" content="Public Emergency and Ambulance Assistance. Instant 112 calling, GPS incident location, and rapid emergency dispatch.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge" style="background:var(--color-emergency-red);">
+          <span data-icon="ambulance"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle" style="color:var(--color-emergency-red); font-weight:700;">Emergency Lifeline</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="tel:112" class="btn btn-emergency btn-sm">
+          <span data-icon="phoneCall"></span>
+          Call 112 Now
+        </a>
+        <a href="index.html" class="btn btn-secondary btn-sm">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="app-container">
+      
+      <!-- Page Header -->
+      <div class="emergency-assist-header">
+        <span class="badge badge-emergency" style="margin-bottom:0.75rem;">PUBLIC EMERGENCY DISPATCH</span>
+        <h1>Need Emergency Medical Assistance?</h1>
+        <p style="font-size:1.1rem;">
+          Choose the option that best matches the situation. In a life-threatening emergency, contact emergency services immediately.
+        </p>
+      </div>
+
+      <!-- Two Differentiated Option Cards (Grid) -->
+      <div class="emergency-options-grid">
+        
+        <!-- OPTION A: EMERGENCY -->
+        <div class="option-card-standard">
+          <div>
+            <div class="option-header-badge badge-opt-standard">
+              <span data-icon="activity"></span> OPTION A — EMERGENCY
+            </div>
+            <h2>Accidents, Injuries & Urgent Illness</h2>
+            <p>
+              For road collisions, falls, sudden illness, or urgent situations requiring ambulance response and hospital triage.
+            </p>
+
+            <!-- Guided Emergency Request Form -->
+            <form id="emergency-request-form">
+              <div class="form-group">
+                <label class="form-label" for="emg-incident-type">Incident Type <span class="required">*</span></label>
+                <select id="emg-incident-type" class="form-select" required>
+                  <option value="Road Accident (Motorbike / Car Collision)">Road Accident / Traffic Collision</option>
+                  <option value="Fall / Severe Trauma / Fracture">Fall / Severe Physical Trauma</option>
+                  <option value="Sudden Illness / Fainting / Unconscious">Sudden Collapse / Unconsciousness</option>
+                  <option value="Cardiac / Severe Chest Pain">Cardiac Distress / Chest Pain</option>
+                  <option value="Respiratory Difficulty / Asthma Attack">Severe Breathing Distress</option>
+                  <option value="Severe Bleeding / Cut">Heavy Bleeding / Deep Wound</option>
+                  <option value="Other Medical Emergency">Other Urgent Emergency</option>
+                </select>
+              </div>
+
+              <!-- Location with Geolocation Detector -->
+              <div class="form-group">
+                <div class="form-label">
+                  <label for="emg-location">Incident Location <span class="required">*</span></label>
+                  <button type="button" class="btn btn-ghost btn-sm" id="btn-detect-gps" style="color:var(--color-teal-dark); padding:2px 6px;">
+                    <span data-icon="navigation"></span> Detect GPS
+                  </button>
+                </div>
+                <div class="input-with-icon">
+                  <span class="input-icon-left" data-icon="mapPin"></span>
+                  <input type="text" id="emg-location" class="form-input" placeholder="e.g. Near Inner Circle, Connaught Place, New Delhi" required>
+                </div>
+                <div id="gps-status-text" class="form-input-help" style="margin-top:4px;">
+                  Tap "Detect GPS" for auto-coordinates or type landmark manually.
+                </div>
+              </div>
+
+              <!-- Callback Phone -->
+              <div class="form-group">
+                <label class="form-label" for="emg-callback-phone">
+                  Your Callback Phone Number <span class="required">*</span>
+                </label>
+                <div class="input-with-icon">
+                  <span class="input-icon-left" data-icon="phone"></span>
+                  <input type="tel" id="emg-callback-phone" class="form-input" placeholder="+91 98765 43210" required>
+                </div>
+                <span class="form-input-help">Paramedics will ring this number immediately to confirm location.</span>
+              </div>
+
+              <!-- Patient Name / PRAN ID (Optional) -->
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                <div class="form-group">
+                  <label class="form-label" for="emg-patient-name">Patient Name (Optional)</label>
+                  <input type="text" id="emg-patient-name" class="form-input" placeholder="Patient's name">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="emg-patient-id">PRAN ID (From Card)</label>
+                  <input type="text" id="emg-patient-id" class="form-input" placeholder="e.g. PRAN-7429">
+                </div>
+              </div>
+
+              <!-- Description / Notes -->
+              <div class="form-group">
+                <label class="form-label" for="emg-description">Short Incident Notes / Landmarks</label>
+                <input type="text" id="emg-description" class="form-input" placeholder="e.g. Near metro pillar 42, conscious, bleeding from left arm">
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:0.75rem;">
+                <span data-icon="ambulance"></span> Submit Emergency Request
+              </button>
+            </form>
+          </div>
+
+          <div style="margin-top:1.5rem; font-size:0.8rem; color:var(--color-cool-gray); border-top:1px solid var(--border-light); padding-top:0.75rem;">
+            Tickets are broadcast to verified trauma centers and assigned on priority.
+          </div>
+        </div>
+
+        <!-- OPTION B: EXTREME EMERGENCY -->
+        <div class="option-card-extreme">
+          <div>
+            <div class="option-header-badge badge-opt-extreme">
+              <span data-icon="alertTriangle"></span> OPTION B — EXTREME EMERGENCY
+            </div>
+            <h2>Life-Threatening Emergency</h2>
+            <p style="color:var(--color-emergency-red-dark); font-weight:600;">
+              For cardiac arrest, severe trauma, massive arterial bleeding, or non-responsive patients. Act immediately!
+            </p>
+
+            <!-- Prominent Call 112 Action -->
+            <div class="extreme-call-box">
+              <div style="font-size:0.85rem; font-weight:800; text-transform:uppercase; color:var(--color-emergency-red); margin-bottom:0.75rem; letter-spacing:0.04em;">
+                Direct Call to National Emergency Response Center
+              </div>
+              
+              <a href="tel:112" class="call-112-btn">
+                <span data-icon="phoneCall"></span>
+                CALL 112 NOW
+              </a>
+
+              <div style="font-size:0.8rem; color:var(--color-cool-gray); margin-top:0.75rem;">
+                Single emergency number for Police, Ambulance & Fire across India.
+              </div>
+            </div>
+
+            <!-- Operator GPS Speech Readout Box -->
+            <div class="extreme-gps-box">
+              <div id="extreme-speech-script">
+                <strong>Tell 112 Operator:</strong> "Medical emergency at current location. Dispatch nearest Advanced Life Support unit."
+              </div>
+            </div>
+
+            <!-- 1-Tap Rapid SOS Request (Bypasses form) -->
+            <div style="margin-top:1.5rem; background:#ffffff; border:1px solid #ffd0d0; border-radius:var(--radius-lg); padding:1.25rem;">
+              <h4 style="color:var(--color-emergency-red-dark); margin-bottom:0.35rem;">
+                Can't Speak or Need Live Triage Tracking?
+              </h4>
+              <p style="font-size:0.85rem; margin-bottom:1rem;">
+                Trigger our 1-Tap Priority SOS beacon. Automatically notifies regional hospital dispatchers with your coordinates.
+              </p>
+              <button type="button" class="btn btn-emergency" id="btn-rapid-sos" style="width:100%;">
+                <span data-icon="shieldAlert"></span> Trigger 1-Tap Rapid SOS Beacon
+              </button>
+            </div>
+          </div>
+
+          <div style="margin-top:1.5rem; padding-top:0.75rem; border-top:1px solid #ffd0d0; font-size:0.775rem; color:var(--color-cool-gray);">
+            <strong>Disclaimer:</strong> PRANरक्षक is a rapid digital assistance utility and does not replace official state emergency dispatch protocols.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/emergency.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      EmergencyAssistManager.init();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Dashboard — PRANरक्षक</title>
+  <meta name="description" content="Personalized medical dashboard with real-time health parameters, allergy warnings, and emergency QR status.">
+
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand-logo">
+        <span class="brand-badge">
+          <span data-icon="activity"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Patient Portal</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="emergency.html?id=PRAN-7429" target="_blank" class="btn btn-secondary btn-sm" title="Preview what a rescuer or bystander sees">
+          <span data-icon="externalLink"></span>
+          Preview Public Emergency View
+        </a>
+        <a href="emergency-assistance.html" class="nav-emergency-btn">
+          <span class="pulse-dot"></span>
+          SOS Assistance
+        </a>
+        <button class="btn btn-ghost btn-sm" onclick="Auth.logout()" title="Sign Out">
+          Log Out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Main Layout -->
+  <main class="main-content">
+    <div class="app-container">
+      <div class="dashboard-layout">
+        
+        <!-- Desktop Sidebar -->
+        <aside class="dashboard-sidebar">
+          <ul class="sidebar-menu">
+            <li class="sidebar-menu-item">
+              <a href="dashboard.html" class="active">
+                <span data-icon="activity"></span>
+                <span>Overview</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="profile.html">
+                <span data-icon="user"></span>
+                <span>Medical Profile</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="contacts.html">
+                <span data-icon="users"></span>
+                <span>Emergency Contacts</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="qr-card.html">
+                <span data-icon="qrCode"></span>
+                <span>My Emergency QR</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item" style="margin-top:1rem; border-top:1px solid var(--border-light); padding-top:1rem;">
+              <a href="emergency-assistance.html">
+                <span data-icon="ambulance" style="color:var(--color-emergency-red);"></span>
+                <span style="color:var(--color-emergency-red); font-weight:700;">Ambulance SOS</span>
+              </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="provider-dashboard.html">
+                <span data-icon="hospital"></span>
+                <span>Hospital Triage</span>
+              </a>
+            </li>
+          </ul>
+
+          <div style="margin-top:2rem; padding:1rem; background:var(--color-mint-soft); border-radius:var(--radius-md); border:1px solid var(--color-mint);">
+            <div style="font-size:0.75rem; font-weight:800; color:#246d5c; text-transform:uppercase;">Quick Status</div>
+            <div style="font-size:0.85rem; font-weight:700; color:var(--color-deep-slate); margin-top:2px;">QR Card Active</div>
+            <div style="font-size:0.75rem; color:var(--color-cool-gray); margin-top:4px;">Ready for wallet printing or mobile lock screen.</div>
+            <a href="qr-card.html" class="btn btn-teal btn-sm" style="width:100%; margin-top:0.65rem; font-size:0.785rem; background:var(--color-teal); color:#fff;">
+              View QR Card
+            </a>
+          </div>
+        </aside>
+
+        <!-- Main Dashboard Area -->
+        <div class="dashboard-main-area">
+
+          <!-- 1. Hero Welcome Banner (Deep Slate with Teal/Mint accents) -->
+          <div class="card-hero-banner">
+            <div class="hero-content">
+              <div class="hero-profile-avatar" id="dash-avatar-initials">AS</div>
+              <div class="hero-text">
+                <h2>Welcome back, <span id="dash-user-name">Aarav Sharma</span></h2>
+                <p>Your digital medical emergency lifeline is armed and synchronized.</p>
+                
+                <div class="hero-badges-row">
+                  <span class="badge badge-teal" id="dash-patient-id">PRAN-7429</span>
+                  <span class="badge badge-mint">DIGITAL ID VERIFIED</span>
+                  <span style="font-size:0.8rem; color:var(--color-silver);" id="dash-last-updated">Last updated: Just now</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a href="qr-card.html" class="btn btn-mint btn-sm">
+                <span data-icon="qrCode"></span>
+                View My QR Card
+              </a>
+              <a href="profile.html" class="btn btn-secondary btn-sm" style="color:var(--color-deep-slate);">
+                <span data-icon="edit"></span>
+                Edit Medical Info
+              </a>
+            </div>
+          </div>
+
+          <!-- Cards Grid with Distinct Visual Styles -->
+          <div class="dashboard-cards-grid">
+
+            <!-- Card 2: Health Readiness & Profile Completion (Sage Green) -->
+            <div class="card card-sage-progress">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-icon-badge">
+                    <span data-icon="shieldCheck"></span>
+                  </div>
+                  <div>
+                    <h3 class="card-title">Profile Completion</h3>
+                    <div class="card-subtitle">Life-saving data readiness</div>
+                  </div>
+                </div>
+                <span class="badge badge-sage" id="dash-completion-val">90%</span>
+              </div>
+
+              <div class="progress-bar-wrapper">
+                <div class="progress-bar-fill" id="dash-completion-bar" style="width: 90%;"></div>
+              </div>
+
+              <ul class="readiness-checklist">
+                <li class="checklist-item">
+                  <span class="checklist-icon-done" data-icon="check"></span>
+                  <span>Blood Group Verified (B+)</span>
+                </li>
+                <li class="checklist-item">
+                  <span class="checklist-icon-done" data-icon="check"></span>
+                  <span>Critical Allergies Registered</span>
+                </li>
+                <li class="checklist-item">
+                  <span class="checklist-icon-done" data-icon="check"></span>
+                  <span>Primary Emergency Contact Linked</span>
+                </li>
+                <li class="checklist-item">
+                  <span class="checklist-icon-done" data-icon="check"></span>
+                  <span>Active Prescriptions Documented</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Card 3: Critical Medical Snapshot (Mint Green Card) -->
+            <div class="card card-mint-snapshot">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-icon-badge">
+                    <span data-icon="droplet"></span>
+                  </div>
+                  <div>
+                    <h3 class="card-title">Blood Group & Donor Status</h3>
+                    <div class="card-subtitle">Immediate transfusion parameters</div>
+                  </div>
+                </div>
+                <span class="badge badge-mint">CRITICAL</span>
+              </div>
+
+              <div class="blood-group-display">
+                <div>
+                  <div style="font-size:0.8rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase;">Blood Type</div>
+                  <div class="blood-type-val">
+                    <span id="dash-blood-group">B+</span>
+                    <span class="blood-rh">Rh+</span>
+                  </div>
+                </div>
+                <div style="text-align:right;">
+                  <span class="badge badge-teal" style="font-size:0.75rem;">Universal Plasma Recipient</span>
+                </div>
+              </div>
+
+              <div class="snapshot-grid">
+                <div class="snapshot-item">
+                  <div class="snapshot-label">Organ Donation</div>
+                  <div class="snapshot-value" id="dash-organ-donor">Registered Donor</div>
+                </div>
+                <div class="snapshot-item">
+                  <div class="snapshot-label">Emergency Protocol</div>
+                  <div class="snapshot-value" style="color:var(--color-teal-dark);">Direct ALS Dispatch</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: Known Allergies & Contraindications (Emergency Red Card) -->
+            <div class="card card-allergy-alert">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-icon-badge">
+                    <span data-icon="alertTriangle"></span>
+                  </div>
+                  <div>
+                    <h3 class="card-title" style="color:var(--color-emergency-red-dark);">Critical Allergies</h3>
+                    <div class="card-subtitle">High-risk medication warnings</div>
+                  </div>
+                </div>
+                <a href="profile.html" class="btn btn-ghost btn-sm" style="color:var(--color-emergency-red);">Edit</a>
+              </div>
+
+              <p style="font-size:0.85rem; color:var(--color-emergency-red-dark); margin-bottom:0.5rem;">
+                Paramedics and attending physicians must avoid administering:
+              </p>
+
+              <div class="allergies-chip-list" id="dash-allergies-list">
+                <!-- Injected via dashboard.js -->
+              </div>
+            </div>
+
+            <!-- Card 5: Current Medications & Dosages (Dusty Blue Accent Card) -->
+            <div class="card card-medications">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-icon-badge">
+                    <span data-icon="pill"></span>
+                  </div>
+                  <div>
+                    <h3 class="card-title">Current Medications</h3>
+                    <div class="card-subtitle">Active prescriptions & schedule</div>
+                  </div>
+                </div>
+                <a href="profile.html" class="btn btn-ghost btn-sm">Manage</a>
+              </div>
+
+              <div class="meds-list" id="dash-meds-list">
+                <!-- Injected via dashboard.js -->
+              </div>
+            </div>
+
+            <!-- Card 6: Existing Conditions & History (Spans 2 columns) -->
+            <div class="card grid-col-span-2" style="border-top:4px solid var(--color-deep-slate);">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-icon-badge" style="background:var(--color-silver-light); color:var(--color-deep-slate);">
+                    <span data-icon="heart"></span>
+                  </div>
+                  <div>
+                    <h3 class="card-title">Existing Medical Conditions & Directives</h3>
+                    <div class="card-subtitle">Chronic illnesses & vital first responder guidance</div>
+                  </div>
+                </div>
+                <a href="profile.html" class="btn btn-secondary btn-sm">Update Details</a>
+              </div>
+
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem;">
+                <div style="background:var(--color-off-white); padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                  <div style="font-size:0.8rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase; margin-bottom:0.25rem;">Chronic Conditions</div>
+                  <div style="font-size:0.95rem; font-weight:600; color:var(--color-deep-slate);" id="dash-conditions-text">Loading...</div>
+                  
+                  <div style="font-size:0.8rem; font-weight:700; color:var(--color-cool-gray); text-transform:uppercase; margin-top:0.75rem; margin-bottom:0.25rem;">Surgical History</div>
+                  <div style="font-size:0.9rem; color:var(--text-secondary);" id="dash-history-text">Loading...</div>
+                </div>
+
+                <div style="background:#fff9f9; padding:1rem; border-radius:var(--radius-md); border:1px solid #ffd0d0;">
+                  <div style="font-size:0.8rem; font-weight:700; color:var(--color-emergency-red); text-transform:uppercase; margin-bottom:0.25rem;">
+                    ⚠ Emergency Instructions for Bystanders / Paramedics
+                  </div>
+                  <div style="font-size:0.9rem; color:var(--color-deep-slate); line-height:1.5;" id="dash-instructions-text">
+                    Loading...
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card: Clinical Resistance (MDR), BMI & Insurance Snapshot (Spans 2 columns) -->
+            <div class="card grid-col-span-2" style="border-top:4px solid var(--color-mint); background:#fcfefd;">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-icon-badge" style="background:var(--color-mint-subtle); color:#246d5c;">
+                    <span data-icon="shieldCheck"></span>
+                  </div>
+                  <div>
+                    <h3 class="card-title">Clinical Intake Parameters & Resistance Profile</h3>
+                    <div class="card-subtitle">Synchronized with n8n emergency webhook & trauma triage</div>
+                  </div>
+                </div>
+                <a href="profile.html" class="btn btn-secondary btn-sm">Edit Clinical Metrics</a>
+              </div>
+
+              <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:1rem;">
+                <div style="background:#fff; padding:0.85rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                  <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-cool-gray);">BMI Metric</div>
+                  <div style="font-size:1.15rem; font-weight:800; color:var(--color-deep-slate); margin-top:3px;" id="dash-bmi-val">23.5 (Normal)</div>
+                </div>
+
+                <div style="background:#fff; padding:0.85rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                  <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-emergency-red);">MDR Resistance</div>
+                  <div style="font-size:1rem; font-weight:700; color:var(--color-emergency-red); margin-top:3px;" id="dash-mdr-val">Negative</div>
+                </div>
+
+                <div style="background:#fff; padding:0.85rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                  <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-cool-gray);">Lifestyle Habits</div>
+                  <div style="font-size:0.85rem; font-weight:600; color:var(--color-deep-slate); margin-top:3px;" id="dash-lifestyle-val">Social Alcohol, Non-smoker</div>
+                </div>
+
+                <div style="background:#fff; padding:0.85rem; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+                  <div style="font-size:0.75rem; text-transform:uppercase; font-weight:700; color:var(--color-teal-dark);">Medical Insurance</div>
+                  <div style="font-size:0.85rem; font-weight:700; color:var(--color-teal-dark); margin-top:3px;" id="dash-insurance-val">Star Health Cashless Active</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 7: Emergency Contacts Summary (Teal Accent Card) -->
+            <div class="card card-contacts-summary">
+              <div class="card-header">
+                <div class="card-title-group">
+                  <div class="card-icon-badge">
+                    <span data-icon="phoneCall"></span>
+                  </div>
+                  <div>
+                    <h3 class="card-title">Emergency Contacts</h3>
+                    <div class="card-subtitle">Direct helpline numbers for rescuers</div>
+                  </div>
+                </div>
+                <a href="contacts.html" class="btn btn-primary btn-sm">Manage Contacts</a>
+              </div>
+
+              <div class="contacts-stack" id="dash-contacts-list">
+                <!-- Injected via dashboard.js -->
+              </div>
+            </div>
+
+            <!-- Card 8: Digital QR Card Quick Access Widget -->
+            <div class="card" style="border-top:4px solid var(--color-mint); display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div class="card-header">
+                  <div class="card-title-group">
+                    <div class="card-icon-badge" style="background:var(--color-mint-subtle); color:#246d5c;">
+                      <span data-icon="qrCode"></span>
+                    </div>
+                    <div>
+                      <h3 class="card-title">Digital QR Card Widget</h3>
+                      <div class="card-subtitle">Active and scan-ready</div>
+                    </div>
+                  </div>
+                  <span class="badge badge-mint">STATUS: LIVE</span>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:1.25rem; margin:1rem 0;">
+                  <div id="dash-qr-thumb" style="border:1px solid var(--border-light); padding:4px; border-radius:var(--radius-md); background:#fff;">
+                    <!-- QR thumbnail generated by JS -->
+                  </div>
+                  <div>
+                    <div style="font-size:0.95rem; font-weight:700; color:var(--color-deep-slate);">Wallet Medical Card</div>
+                    <p style="font-size:0.825rem; margin-top:0.25rem;">
+                      Ready to print or download as high-resolution PNG for your wallet, helmet, or backpack.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:0.75rem; margin-top:1rem;">
+                <a href="qr-card.html" class="btn btn-teal btn-sm" style="flex:1; background:var(--color-teal); color:#fff;">
+                  Open Wallet Card
+                </a>
+                <a href="emergency.html?id=PRAN-7429" target="_blank" class="btn btn-secondary btn-sm" title="Test QR Scan">
+                  Test Scan View
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/vendor/icons.js"></script>
+  <script src="js/vendor/qrcode.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Require patient authentication
+      if (Auth.requireAuth('patient')) {
+        DashboardManager.init();
+      }
+    });
+  </script>
+</body>
+</html>
