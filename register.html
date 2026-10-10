@@ -27,7 +27,7 @@
       </a>
 
       <div class="nav-actions">
-        <a href="emergency-assistance.html" class="nav-emergency-btn">
+        <a href="/emergency-assistance.html" class="nav-emergency-btn">
           <span class="pulse-dot"></span>
           Emergency Assistance
         </a>
@@ -49,20 +49,7 @@
           <p>Register once, protect yourself everywhere. Generate your life-saving emergency QR ID.</p>
         </div>
 
-        <!-- Demo Quick-Fill Box for Hackathon Reviewers -->
-        <div class="demo-account-box">
-          <div class="demo-account-title">Hackathon Reviewer Shortcut</div>
-          <div style="font-size:0.825rem; color:var(--color-deep-slate);">
-            Click below to instantly populate pre-verified demo patient credentials:
-          </div>
-          <div class="demo-account-buttons">
-            <button type="button" class="btn btn-mint btn-sm" id="btn-quick-fill">
-              Auto-Fill Demo Data (Aarav Sharma)
-            </button>
-          </div>
-        </div>
-
-        <form id="register-form" novalidate>
+        <form id="register-form" novalidate style="margin-top:1.5rem;">
           <div class="form-group">
             <label class="form-label" for="reg-name">
               Full Legal Name <span class="required">*</span>
@@ -147,20 +134,6 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('register-form');
-      const quickFillBtn = document.getElementById('btn-quick-fill');
-
-      // Shortcut
-      if (quickFillBtn) {
-        quickFillBtn.addEventListener('click', () => {
-          document.getElementById('reg-name').value = 'Aarav Sharma';
-          document.getElementById('reg-email').value = 'aarav.sharma@example.com';
-          document.getElementById('reg-phone').value = '+91 98765 43210';
-          document.getElementById('reg-password').value = 'SecurePass123';
-          document.getElementById('reg-confirm-password').value = 'SecurePass123';
-          document.getElementById('reg-consent').checked = true;
-          UI.showToast('Demo patient details populated.', 'info');
-        });
-      }
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -197,29 +170,49 @@
         // Button loading
         const btn = document.getElementById('btn-submit-reg');
         btn.disabled = true;
-        btn.textContent = 'Creating Medical Vault...';
+        btn.textContent = 'Generating Unique PRAN Lifeline ID & QR...';
 
-        setTimeout(() => {
-          // Initialize patient in DataManager
-          const patient = DataManager.getPatient();
-          patient.fullName = name;
-          patient.email = email;
-          patient.phone = phone;
-          DataManager.savePatient(patient);
+        (async () => {
+          try {
+            const res = await fetch('/api/auth/register', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                fullName: name,
+                email: email,
+                phone: phone,
+                password: pass
+              })
+            });
 
-          // Establish session
-          Auth.setSession({
-            id: patient.id,
-            fullName: patient.fullName,
-            email: patient.email,
-            role: 'patient'
-          });
+            const data = await res.json();
+            if (data.success && data.user) {
+              // Sync local DataManager if available
+              const p = DataManager.getPatient();
+              p.id = data.user.id;
+              p.fullName = data.user.fullName;
+              p.email = data.user.email;
+              p.phone = phone;
+              DataManager.savePatient(p);
 
-          UI.showToast('Registration successful! Welcome to PRANरक्षक.', 'success', 'Account Created');
-          setTimeout(() => {
-            window.location.href = 'dashboard.html';
-          }, 600);
-        }, 500);
+              Auth.setSession(data.user);
+              UI.showToast(`Unique Lifeline ID ${data.user.id} generated! Redirecting to Dashboard...`, 'success', 'Vault Created');
+
+              setTimeout(() => {
+                window.location.href = data.redirectUrl || '/patient/dashboard';
+              }, 600);
+            } else {
+              btn.disabled = false;
+              btn.textContent = 'Register & Continue to Medical Profile';
+              UI.showToast(data.error || 'Registration failed. Please check your details.', 'error');
+            }
+          } catch (err) {
+            console.warn('Registration error:', err);
+            btn.disabled = false;
+            btn.textContent = 'Register & Continue to Medical Profile';
+            UI.showToast('Server connection error. Please try again.', 'error');
+          }
+        })();
       });
     });
   </script>

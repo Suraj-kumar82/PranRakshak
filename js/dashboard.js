@@ -5,7 +5,12 @@
  */
 
 const DashboardManager = {
-  init() {
+  async init() {
+    const session = (typeof Auth !== 'undefined' && Auth.getSession) ? Auth.getSession() : null;
+    const sessionPatientId = (session && session.role === 'patient' && session.id) ? session.id : null;
+    if (sessionPatientId) {
+      await this.syncProfileFromServer(sessionPatientId);
+    }
     this.renderDashboard();
   },
 
@@ -122,25 +127,132 @@ const DashboardManager = {
       }
     }
 
-    // QR Code Thumbnail
-    const qrThumbContainer = document.getElementById('dash-qr-thumb');
-    if (qrThumbContainer) {
-      qrThumbContainer.innerHTML = '';
-      const emergencyUrl = `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/emergency.html?id=${patient.id}`;
-      try {
-        new QRCode(qrThumbContainer, {
-          text: emergencyUrl,
-          width: 90,
-          height: 90,
-          colorDark: "#273746",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.M
-        });
-      } catch (e) {
-        console.error(e);
-      }
+    // Featured Smart QR Code Lifeline & Actions
+    const mainQrImg = document.getElementById('dash-main-qr-img');
+    if (mainQrImg) {
+      mainQrImg.src = `/api/qr/${encodeURIComponent(patient.id)}`;
     }
 
+    ['dash-btn-scan-qr', 'nav-btn-scan-qr', 'card8-btn-scan-qr'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.href = '#camera-scanner';
+        el.onclick = (e) => {
+          e.preventDefault();
+          if (typeof QRScannerModal !== 'undefined') {
+            QRScannerModal.open(patient.id);
+          }
+        };
+      }
+    });
+
+    ['dash-btn-test-scan', 'nav-btn-test-scan', 'card8-btn-test-scan'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.href = `/scan/${encodeURIComponent(patient.id)}`;
+    });
+
+    const qrUrlText = document.getElementById('dash-qr-url-text');
+    if (qrUrlText) {
+      qrUrlText.textContent = `${window.location.origin}/scan/${encodeURIComponent(patient.id)}`;
+    }
+
+    const qrPatientName = document.getElementById('dash-qr-patient-name');
+    if (qrPatientName) {
+      qrPatientName.textContent = patient.fullName;
+    }
+
+    const downloadQrBtn = document.getElementById('dash-btn-download-qr');
+    if (downloadQrBtn) {
+      downloadQrBtn.href = `/api/qr/${encodeURIComponent(patient.id)}`;
+      downloadQrBtn.download = `PRAN-QR-${patient.id}.png`;
+    }
+
+    // QR Code Thumbnail Widget in Card 8
+    const qrThumbContainer = document.getElementById('dash-qr-thumb');
+    if (qrThumbContainer) {
+      qrThumbContainer.innerHTML = `<img src="/api/qr/${encodeURIComponent(patient.id)}" alt="QR Thumbnail" style="width:90px; height:90px; display:block; border-radius:6px;">`;
+    }
+
+    // Render Treatments
+    this.renderTreatments(patient.treatments || []);
+
+    // Sync from server for latest clinical updates
+    this.syncProfileFromServer(patient.id);
+
     renderIcons();
+  },
+
+  async syncProfileFromServer(patientId) {
+    try {
+      const res = await fetch(`/api/patient/profile?id=${encodeURIComponent(patientId)}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.patient) {
+          const p = data.patient;
+          // Normalize
+          p.fullName = p.fullName || p.full_name;
+          p.bloodGroup = p.bloodGroup || p.blood_group;
+          p.medicalHistory = p.medicalHistory || p.medical_history;
+          p.emergencyNotes = p.emergencyNotes || p.emergency_notes;
+          DataManager.savePatient(p);
+          this.renderTreatments(p.treatments || []);
+        }
+      }
+    } catch (e) {
+      console.warn('Profile sync error:', e);
+    }
+  },
+
+  renderTreatments(treatments) {
+    const listEl = document.getElementById('dash-treatments-list');
+    if (!listEl) return;
+
+    if (!treatments || treatments.length === 0) {
+      listEl.innerHTML = `
+        <div style="font-size:0.875rem; color:var(--color-cool-gray); font-style:italic; padding:0.5rem 0;">
+          No hospital treatment records logged yet. When an attending trauma center treats you, their verified diagnosis and clinical notes will appear here.
+        </div>
+      `;
+      return;
+    }
+
+    listEl.innerHTML = treatments.map(t => {
+      const dt = t.created_at ? new Date(t.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Verified Clinical Record';
+      return `
+        <div style="background:var(--color-off-white); border:1px solid var(--border-light); border-left:4px solid var(--color-teal); border-radius:6px; padding:0.9rem 1.1rem; margin-bottom:0.75rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.35rem;">
+            <div>
+              <strong style="color:var(--color-deep-slate); font-size:1rem;">${t.hospital_name || 'Hospital Trauma ER'}</strong>
+              <span style="font-size:0.8rem; color:var(--color-cool-gray); margin-left:0.5rem;">Attending: Dr. ${t.doctor_name || 'Staff Surgeon'}</span>
+            </div>
+            <span class="badge badge-teal" style="font-size:0.75rem; font-weight:800;">${t.patient_status || 'STABILIZED'}</span>
+          </div>
+
+          <div style="font-size:0.9rem; color:var(--color-deep-slate); margin-bottom:0.25rem;">
+            <strong>Diagnosis:</strong> <span style="color:var(--color-emergency-red); font-weight:700;">${t.diagnosis}</span>
+          </div>
+
+          <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.25rem;">
+            <strong>Treatment & Procedures:</strong> ${t.treatment_provided}
+          </div>
+
+          ${t.prescriptions_added ? `
+            <div style="font-size:0.825rem; color:var(--color-teal-dark);">
+              <strong>Prescriptions Added to Profile:</strong> ${t.prescriptions_added}
+            </div>
+          ` : ''}
+
+          ${t.notes ? `
+            <div style="font-size:0.8rem; color:var(--color-cool-gray); margin-top:0.2rem;">
+              <strong>Clinical Directives:</strong> ${t.notes}
+            </div>
+          ` : ''}
+
+          <div style="font-size:0.75rem; color:var(--color-cool-gray); margin-top:0.4rem; font-family:var(--font-mono);">
+            Recorded: ${dt} • Verification ID: ${t.id}
+          </div>
+        </div>
+      `;
+    }).join('');
   }
 };

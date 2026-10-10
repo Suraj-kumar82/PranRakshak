@@ -27,7 +27,7 @@
       </a>
 
       <div class="nav-actions">
-        <a href="emergency-assistance.html" class="nav-emergency-btn">
+        <a href="/emergency-assistance.html" class="nav-emergency-btn">
           <span class="pulse-dot"></span>
           Emergency Assistance
         </a>
@@ -54,37 +54,20 @@
 
         <!-- Mode Switcher Tabs -->
         <div class="auth-tabs-nav">
-          <button type="button" class="auth-tab-btn is-active" id="tab-btn-intake" onclick="switchAuthTab('intake')">
-            <span data-icon="shieldCheck"></span>
-            1. Clinical Medical Intake (n8n Webhook)
-          </button>
-          <button type="button" class="auth-tab-btn" id="tab-btn-login" onclick="switchAuthTab('login')">
+          <button type="button" class="auth-tab-btn is-active" id="tab-btn-login" onclick="switchAuthTab('login')">
             <span data-icon="user"></span>
-            2. Existing Account Sign-in
+            1. Patient Account Sign-in
+          </button>
+          <button type="button" class="auth-tab-btn" id="tab-btn-intake" onclick="switchAuthTab('intake')">
+            <span data-icon="shieldCheck"></span>
+            2. Detailed Clinical Intake Form
           </button>
         </div>
 
         <!-- ============================================================== -->
-        <!-- TAB 1: CLINICAL MEDICAL INTAKE & N8N WEBHOOK DISPATCH FORM     -->
+        <!-- TAB 1: CLINICAL MEDICAL INTAKE                                 -->
         <!-- ============================================================== -->
-        <div id="section-intake-form">
-          
-          <!-- Webhook Endpoint Callout & 1-Click Auto-Fill -->
-          <div class="demo-account-box" style="margin-bottom:1.5rem; background:#f0f9f6; border-color:var(--color-teal);">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
-              <div>
-                <div class="demo-account-title" style="color:var(--color-teal-dark);">
-                  🔗 Connected n8n Webhook Endpoint:
-                </div>
-                <code style="font-size:0.75rem; background:#fff; padding:2px 8px; border-radius:4px; border:1px solid #cbe4de; color:var(--color-deep-slate);">
-                  https://aizen56.app.n8n.cloud/webhook-test/emergency
-                </code>
-              </div>
-              <button type="button" class="btn btn-mint btn-sm" id="btn-autofill-intake" style="font-weight:700;">
-                <span data-icon="edit"></span> Auto-Fill Verified Clinical Data
-              </button>
-            </div>
-          </div>
+        <div id="section-intake-form" style="display:none;">
 
           <form id="clinical-intake-form" novalidate>
             
@@ -258,42 +241,26 @@
         </div>
 
         <!-- ============================================================== -->
-        <!-- TAB 2: EXISTING ACCOUNT QUICK SIGN-IN                          -->
+        <!-- TAB 1: PATIENT ACCOUNT SIGN-IN                                 -->
         <!-- ============================================================== -->
-        <div id="section-login-form" style="display:none;">
+        <div id="section-login-form" style="display:block; margin-top:1.25rem;">
           
-          <div class="demo-account-box">
-            <div class="demo-account-title">1-Click Fast Track (For Evaluators)</div>
-            <div style="font-size:0.825rem; color:var(--color-deep-slate); margin-bottom:0.35rem;">
-              Instant sign-in without typing credentials:
-            </div>
-            <div class="demo-account-buttons">
-              <button type="button" class="btn btn-teal btn-sm" onclick="Auth.loginAsDemoPatient()" style="background:var(--color-teal); color:#fff;">
-                <span data-icon="user"></span> Demo Patient (Aarav Sharma)
-              </button>
-              <button type="button" class="btn btn-dusty btn-sm" onclick="Auth.loginAsDemoProvider()">
-                <span data-icon="hospital"></span> Trauma Dispatcher
-              </button>
-            </div>
-          </div>
-
           <form id="login-form" novalidate>
             <div class="form-group">
-              <label class="form-label" for="login-email">Email Address</label>
+              <label class="form-label" for="login-email">Email Address <span class="required">*</span></label>
               <div class="input-with-icon">
                 <span class="input-icon-left" data-icon="user"></span>
-                <input type="email" id="login-email" class="form-input" placeholder="aarav.sharma@example.com" value="aarav.sharma@example.com" required>
+                <input type="email" id="login-email" class="form-input" placeholder="e.g. name@example.com" required>
               </div>
               <div class="form-input-error" id="err-login-email" style="display:none;">Please enter your email</div>
             </div>
 
             <div class="form-group">
               <div class="form-label">
-                <label for="login-password">Password</label>
-                <a href="#" style="font-size:0.8rem; color:var(--color-teal);" onclick="alert('In demo mode, any password will sign in!'); return false;">Forgot?</a>
+                <label for="login-password">Password <span class="required">*</span></label>
               </div>
               <div class="input-with-icon">
-                <input type="password" id="login-password" class="form-input" placeholder="••••••••••••" value="DemoPass123" required>
+                <input type="password" id="login-password" class="form-input" placeholder="Enter your password" required>
                 <button type="button" class="input-icon-right" data-toggle-password="login-password" aria-label="Toggle password visibility">
                   <span data-icon="eye"></span>
                 </button>
@@ -302,9 +269,13 @@
             </div>
 
             <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:1.25rem;" id="btn-submit-login">
-              Sign In to Dashboard
+              Sign In to Patient Dashboard
             </button>
           </form>
+
+          <div style="text-align:center; margin-top:1.25rem; font-size:0.875rem; color:var(--color-cool-gray);">
+            New patient? <a href="register.html" style="font-weight:700; color:var(--color-teal-dark);">Create New Account</a> • <a href="/hospital/login" style="font-weight:600; color:var(--color-cool-gray);">Hospital Staff Login</a>
+          </div>
 
         </div>
 
@@ -360,29 +331,6 @@
       if (heightInput) heightInput.addEventListener('input', updateBmiLive);
       if (weightInput) weightInput.addEventListener('input', updateBmiLive);
       updateBmiLive();
-
-      // Auto-fill button for quick testing
-      const autofillBtn = document.getElementById('btn-autofill-intake');
-      if (autofillBtn) {
-        autofillBtn.addEventListener('click', () => {
-          const patient = DataManager.getPatient();
-          document.getElementById('intake-name').value = patient.fullName || 'Aarav Sharma';
-          document.getElementById('intake-age').value = patient.age || 30;
-          document.getElementById('intake-blood-group').value = patient.bloodGroup || 'B+';
-          document.getElementById('intake-allergies').value = 'Penicillin (Severe Anaphylaxis), Peanuts';
-          document.getElementById('intake-lifestyle').value = 'Occasional Alcohol (Social), Non-smoker, Regular runner';
-          document.getElementById('intake-height').value = 175;
-          document.getElementById('intake-weight').value = 72;
-          document.getElementById('intake-mdr').value = 'None (Negative for drug-resistant pathogens)';
-          document.getElementById('intake-prev-history').value = 'Treated for Acute Viral Bronchitis (Aug 2025). Full recovery.';
-          document.getElementById('intake-surgical-history').value = 'Laparoscopic Appendectomy (August 2021). No cardiac stents.';
-          document.getElementById('intake-transplant-history').value = 'None (No organ/tissue transplants)';
-          document.getElementById('intake-drug-toxicity').value = 'Reported mild cutaneous rash to Ciprofloxacin (2022)';
-          document.getElementById('intake-insurance').value = 'Star Health Comprehensive #SH-884102 (Cashless Active, TPA: MediAssist)';
-          updateBmiLive();
-          UI.showToast('Pre-verified clinical parameters auto-filled!', 'info');
-        });
-      }
 
       // Handle Clinical Intake Form Submission to n8n Webhook
       const intakeForm = document.getElementById('clinical-intake-form');
@@ -497,7 +445,7 @@
       // Existing Account Login Form
       const loginForm = document.getElementById('login-form');
       if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
           e.preventDefault();
           const email = document.getElementById('login-email').value.trim();
           const pass = document.getElementById('login-password').value;
@@ -509,9 +457,36 @@
 
           const btn = document.getElementById('btn-submit-login');
           btn.disabled = true;
-          btn.textContent = 'Signing in...';
+          btn.textContent = 'Signing in & Generating QR...';
 
-          setTimeout(() => {
+          try {
+            const res = await fetch('/api/auth/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: email, password: pass, role: 'patient' })
+            });
+            const data = await res.json();
+            if (data.success && data.user) {
+              Auth.setSession(data.user);
+              const p = DataManager.getPatient(data.user.id);
+              p.id = data.user.id;
+              p.fullName = data.user.fullName;
+              p.email = data.user.email;
+              DataManager.savePatient(p);
+
+              UI.showToast(`Signed in as ${data.user.fullName}. QR Lifeline ready!`, 'success');
+              setTimeout(() => {
+                window.location.href = data.redirectUrl || 'dashboard.html';
+              }, 400);
+              return;
+            } else {
+              UI.showToast(data.error || 'Login failed. Please check credentials.', 'error');
+              btn.disabled = false;
+              btn.textContent = 'Sign In to Patient Dashboard';
+              return;
+            }
+          } catch (err) {
+            console.warn('Network login error, falling back locally:', err);
             const patient = DataManager.getPatient();
             Auth.setSession({
               id: patient.id,
@@ -523,7 +498,7 @@
             setTimeout(() => {
               window.location.href = 'dashboard.html';
             }, 400);
-          }, 300);
+          }
         });
       }
     });

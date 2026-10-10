@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hospital Portal Sign In — PRANरक्षक</title>
+  <meta name="description" content="Secure clinical authentication console for hospital emergency departments, trauma doctors, and ambulance dispatchers.">
+
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/pages.css">
+</head>
+<body style="background:#f8fafc; min-height:100vh; display:flex; flex-direction:column;">
+
+  <!-- Sticky Navbar -->
+  <header class="site-navbar">
+    <div class="navbar-inner">
+      <a href="/" class="brand-logo">
+        <span class="brand-badge" style="background:var(--color-deep-slate); color:#fff;">
+          <span data-icon="hospital"></span>
+        </span>
+        <div class="brand-text">
+          <span class="brand-name">PRAN<span>रक्षक</span></span>
+          <span class="brand-tagline-subtle">Hospital ER & Trauma Desk</span>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <a href="/patient/login" class="btn btn-secondary btn-sm" style="font-weight:700;">
+          <span data-icon="user"></span> Patient Portal ➔
+        </a>
+        <a href="/emergency-assistance.html" class="nav-emergency-btn">
+          <span class="pulse-dot"></span>
+          Emergency SOS
+        </a>
+        <a href="/" class="btn btn-ghost btn-sm">Home</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Sign In Layout -->
+  <main class="main-content" style="flex:1; display:flex; align-items:center; padding:2rem 0;">
+    <div class="app-container" style="display:flex; justify-content:center; width:100%;">
+      <div class="auth-card" style="max-width:480px; width:100%; margin:0 auto; background:#ffffff; border:1px solid var(--border-light); border-radius:var(--radius-xl); box-shadow:var(--shadow-xl); padding:2.25rem;">
+        
+        <!-- Header -->
+        <div class="auth-header" style="text-align:center; margin-bottom:1.5rem;">
+          <div style="width:58px; height:58px; border-radius:var(--radius-full); background:#f1f5f9; color:var(--color-deep-slate); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; border:1px solid #cbd5e1;">
+            <span data-icon="hospital" style="width:28px; height:28px;"></span>
+          </div>
+          <span class="badge" style="background:#e2e8f0; color:#1e293b; font-weight:800; font-size:0.75rem; letter-spacing:0.04em; margin-bottom:0.45rem;">
+            HOSPITAL & TRAUMA ACCESS
+          </span>
+          <h1 style="margin:0.25rem 0 0.4rem; font-size:1.85rem; color:var(--color-deep-slate);">Hospital Portal Sign In</h1>
+          <p style="font-size:0.875rem; color:var(--text-secondary); margin:0;">
+            Central triage console for ER receptionists, trauma physicians, and ambulance coordinators.
+          </p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="hospital-login-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="hospital-email">Hospital Department Email</label>
+            <div class="input-with-icon">
+              <span class="input-icon-left" data-icon="mail"></span>
+              <input type="email" id="hospital-email" class="form-input" placeholder="e.g. trauma.er@cityhospital.org" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <label class="form-label" for="hospital-password" style="margin:0;">Hospital Access Key</label>
+            </div>
+            <div class="input-with-icon" style="margin-top:0.35rem;">
+              <input type="password" id="hospital-password" class="form-input" placeholder="Enter hospital access key" required>
+              <button type="button" class="input-icon-right" id="toggle-hospital-pass" aria-label="Toggle password visibility">
+                <span data-icon="eye"></span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-lg" style="width:100%; font-weight:700; margin-top:1.25rem; background:var(--color-deep-slate); color:#fff;" id="btn-submit-hospital-login">
+            <span data-icon="activity"></span> Enter Hospital ER & Triage Console
+          </button>
+        </form>
+
+        <!-- Divider & Portal Switcher -->
+        <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--border-light); text-align:center; font-size:0.875rem;">
+          <span style="color:var(--text-secondary);">Are you an Individual Patient?</span>
+          <a href="/patient/login" style="color:var(--color-teal-dark); font-weight:700; margin-left:4px;">Open Patient Portal ➔</a>
+        </div>
+
+        <div style="margin-top:1rem; text-align:center; font-size:0.825rem; color:var(--color-cool-gray);">
+          24/7 Clinical Emergency Hotline: <strong style="color:var(--color-deep-slate);">112 / 108</strong>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="/js/vendor/icons.js"></script>
+  <script src="/js/data.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle password visibility
+      const passInput = document.getElementById('hospital-password');
+      const toggleBtn = document.getElementById('toggle-hospital-pass');
+      if (toggleBtn && passInput) {
+        toggleBtn.addEventListener('click', () => {
+          const isPass = passInput.type === 'password';
+          passInput.type = isPass ? 'text' : 'password';
+          toggleBtn.innerHTML = isPass ? Icons.eyeOff : Icons.eye;
+        });
+      }
+
+      // Standard Form Login
+      const form = document.getElementById('hospital-login-form');
+      const submitBtn = document.getElementById('btn-submit-hospital-login');
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('hospital-email').value.trim();
+          const password = document.getElementById('hospital-password').value.trim();
+
+          if (!email || !password) {
+            UI.showToast('Please enter both email and password.', 'warning');
+            return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span data-icon="refresh"></span> Signing in...';
+          renderIcons(submitBtn);
+
+          try {
+            const res = await fetch('/api/auth/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password, role: 'hospital' })
+            });
+            const data = await res.json();
+            if (data.success && data.user) {
+              Auth.setSession(data.user);
+              UI.showToast(data.message || 'Hospital authentication confirmed!', 'success');
+              setTimeout(() => {
+                window.location.href = data.redirectUrl || '/hospital/dashboard';
+              }, 300);
+              return;
+            } else {
+              UI.showToast(data.error || 'Invalid hospital credentials. Please verify your email and access key.', 'error');
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<span data-icon="activity"></span> Enter Hospital ER & Scanner Console';
+              renderIcons(submitBtn);
+              return;
+            }
+          } catch (err) {
+            console.warn('Server fetch error, falling back locally:', err);
+            // Local fallback
+            Auth.setSession({
+              id: 'HOSP-01',
+              fullName: 'City General Trauma Center Triage',
+              email: email,
+              role: 'hospital'
+            });
+            UI.showToast('Signed in as Hospital Trauma Center Desk', 'success');
+            setTimeout(() => {
+              window.location.href = '/hospital/dashboard';
+            }, 300);
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

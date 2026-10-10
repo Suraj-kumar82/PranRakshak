@@ -11,11 +11,8 @@ const EmergencyProfileView = {
   },
 
   renderProfile() {
-    const params = new URLSearchParams(window.location.search);
-    const patientId = params.get('id') || 'PRAN-7429';
-
-    // In prototype, loads patient data from DataManager
-    const patient = DataManager.getPatient();
+    // Dynamic decode from URL parameter or ID
+    const patient = DataManager.decodePatientFromQr(window.location.href);
 
     const setEl = (id, text) => {
       const el = document.getElementById(id);

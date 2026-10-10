@@ -29,21 +29,20 @@
       <nav>
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="dashboard.html" class="nav-link" style="color:var(--color-teal-dark); font-weight:700;">👤 Patient Portal</a></li>
+          <li><a href="provider-dashboard.html" class="nav-link" style="color:var(--color-deep-slate); font-weight:700;">🏥 Hospital Portal (QR Scanner)</a></li>
           <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
-          <li><a href="#features" class="nav-link">Features</a></li>
-          <li><a href="dashboard.html" class="nav-link">Patient Portal</a></li>
-          <li><a href="provider-dashboard.html" class="nav-link">Hospital Triage</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <a href="emergency-assistance.html" class="nav-emergency-btn">
+        <a href="/emergency-assistance.html" class="nav-emergency-btn">
           <span class="pulse-dot"></span>
           <span data-icon="alertTriangle"></span>
-          Emergency Assistance
+          Emergency SOS
         </a>
-        <a href="login.html" class="btn btn-secondary btn-sm" id="nav-login-btn">Log In</a>
-        <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+        <a href="/patient/login" class="btn btn-secondary btn-sm" id="nav-login-btn">👤 Patient Login</a>
+        <a href="/hospital/login" class="btn btn-primary btn-sm" style="background:var(--color-deep-slate); color:#fff;">🏥 Hospital Desk</a>
         <button class="mobile-menu-toggle" aria-label="Toggle navigation">
           <span data-icon="menu"></span>
         </button>
@@ -85,9 +84,9 @@
                 <span data-icon="phoneCall"></span>
                 Emergency Assistance (112)
               </a>
-              <a href="emergency.html?id=PRAN-7429" class="btn btn-secondary btn-lg" title="See what a bystander sees">
-                <span data-icon="eye"></span>
-                Scan Demo QR
+              <a href="/patient/login" class="btn btn-secondary btn-lg" title="Sign In to Patient Vault">
+                <span data-icon="user"></span>
+                Sign In to Vault
               </a>
             </div>
 
@@ -166,6 +165,113 @@
                   <div>112 Emergency-Ready</div>
                 </div>
               </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Dedicated Portal Chooser (Clean Separation of Patient vs Hospital) -->
+    <section class="portal-selector-section" id="choose-portal">
+      <div class="app-container">
+        <div class="section-header" style="text-align:center; max-width:760px; margin:0 auto 2.5rem;">
+          <span class="section-tag" style="background:var(--color-teal-subtle); color:var(--color-teal-dark);">Dedicated Digital Systems</span>
+          <h2 class="section-title">Two Separate Portals Built for India's Healthcare Ecosystem</h2>
+          <p>PRANरक्षक cleanly separates citizen personal health management from high-pressure hospital trauma triage and emergency QR scanning.</p>
+        </div>
+
+        <div class="portal-cards-grid">
+          
+          <!-- Portal 1: Individual / Patient Portal -->
+          <div class="portal-card portal-card-patient">
+            <div>
+              <div class="portal-card-header">
+                <div class="portal-card-icon portal-icon-patient">
+                  <span data-icon="user" style="width:30px; height:30px;"></span>
+                </div>
+                <div>
+                  <span class="portal-badge-label" style="background:#e0f5ee; color:#185d4e;">For Individuals & Families</span>
+                  <h3 style="margin:0; font-size:1.45rem; color:var(--color-deep-slate);">Individual Patient Portal</h3>
+                </div>
+              </div>
+              <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.6;">
+                Your encrypted personal medical vault. Configure critical drug allergies, ongoing prescriptions, and generate your official life-saving emergency QR ID card.
+              </p>
+
+              <ul class="portal-feature-list">
+                <li class="portal-feature-item">
+                  <span data-icon="check"></span>
+                  <span><strong>Smart QR Card Generation:</strong> Encodes all vital medical parameters into wallet PNG.</span>
+                </li>
+                <li class="portal-feature-item">
+                  <span data-icon="check"></span>
+                  <span><strong>Allergies & Blood Group First:</strong> Anaphylaxis warnings front and center.</span>
+                </li>
+                <li class="portal-feature-item">
+                  <span data-icon="check"></span>
+                  <span><strong>Emergency Contact Network:</strong> One-tap calling to family in golden hour.</span>
+                </li>
+                <li class="portal-feature-item">
+                  <span data-icon="check"></span>
+                  <span><strong>Cashless Insurance Sync:</strong> Pre-load policy # for hassle-free admission.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div style="margin-top:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <a href="/patient/login" class="btn btn-primary" style="flex:1; justify-content:center; font-weight:700;">
+                <span data-icon="user"></span> Patient Sign In / Dashboard
+              </a>
+              <a href="/patient/register" class="btn btn-secondary" style="font-weight:700;">
+                <span data-icon="plus"></span> Register Patient
+              </a>
+            </div>
+          </div>
+
+          <!-- Portal 2: Hospital & Trauma Center Portal -->
+          <div class="portal-card portal-card-hospital">
+            <div>
+              <div class="portal-card-header">
+                <div class="portal-card-icon portal-icon-hospital">
+                  <span data-icon="hospital" style="width:30px; height:30px;"></span>
+                </div>
+                <div>
+                  <span class="portal-badge-label" style="background:#e2e8f0; color:#1e293b;">For Hospitals & Doctors</span>
+                  <h3 style="margin:0; font-size:1.45rem; color:var(--color-deep-slate);">Hospital & Trauma Center Portal</h3>
+                </div>
+              </div>
+              <p style="color:var(--text-secondary); font-size:0.95rem; line-height:1.6;">
+                Emergency Department & Ambulance Command Desk. Scan incoming patient QR codes with live camera or file upload to instantly unlock their complete medical dossier and allergy warnings.
+              </p>
+
+              <ul class="portal-feature-list">
+                <li class="portal-feature-item">
+                  <span data-icon="check" style="color:var(--color-deep-slate);"></span>
+                  <span><strong>Live Camera & File QR Scanner:</strong> Instant decoding in milliseconds.</span>
+                </li>
+                <li class="portal-feature-item">
+                  <span data-icon="check" style="color:var(--color-deep-slate);"></span>
+                  <span><strong>Emergency Medical Dossier:</strong> Blood group, allergies, medications, and MDR status.</span>
+                </li>
+                <li class="portal-feature-item">
+                  <span data-icon="check" style="color:var(--color-deep-slate);"></span>
+                  <span><strong>Zero-Delay Trauma ICU Admission:</strong> Instant cashless TPA policy access.</span>
+                </li>
+                <li class="portal-feature-item">
+                  <span data-icon="check" style="color:var(--color-deep-slate);"></span>
+                  <span><strong>112 SOS Incident Feed & Fleet:</strong> ALS/BLS ambulance dispatch controls.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div style="margin-top:1.5rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+              <a href="/hospital/login" class="btn btn-lg" style="background:var(--color-deep-slate); color:#fff; flex:1; justify-content:center; font-weight:700;">
+                <span data-icon="hospital"></span> Hospital Staff Sign In
+              </a>
+              <a href="/hospital/dashboard" class="btn btn-secondary" style="font-weight:700;">
+                <span data-icon="camera"></span> Open Scanner Desk
+              </a>
             </div>
           </div>
 
@@ -274,20 +380,20 @@
       </div>
     </section>
 
-    <!-- Live Hackathon Interactive Simulation Banner -->
+    <!-- Portals Access Section -->
     <section class="app-container">
       <div class="simulation-cta-banner">
         <div>
-          <span class="badge badge-mint" style="margin-bottom:0.75rem;">COLLEGE HACKATHON LIVE DEMO</span>
-          <h2>Explore Both Sides of the Platform</h2>
+          <span class="badge badge-mint" style="margin-bottom:0.75rem;">CONNECTED EMERGENCY INFRASTRUCTURE</span>
+          <h2>Access the PRANरक्षक Platform</h2>
           <p>
-            Test the entire emergency pipeline: register as a patient, generate a QR card, simulate an emergency bystander scan, and switch to the Hospital Dispatcher triage board to dispatch an ambulance!
+            Secure, encrypted medical identification for citizens and unified real-time telemetry dispatch for hospital emergency trauma networks.
           </p>
         </div>
         <div style="display:flex; flex-direction:column; gap:0.75rem; flex-shrink:0;">
-          <a href="dashboard.html" class="btn btn-mint btn-lg">Open Patient Dashboard</a>
-          <a href="provider-dashboard.html" class="btn btn-secondary btn-lg">Open Hospital Triage</a>
-          <a href="emergency-assistance.html" class="btn btn-emergency btn-lg">Trigger SOS Assistance</a>
+          <a href="/patient/login" class="btn btn-mint btn-lg">Citizen Patient Portal</a>
+          <a href="/hospital/login" class="btn btn-secondary btn-lg">Hospital Trauma ER Portal</a>
+          <a href="/patient/register" class="btn btn-ghost btn-lg" style="color:#fff; border-color:rgba(255,255,255,0.4);">Create Health Profile</a>
         </div>
       </div>
     </section>
@@ -334,7 +440,7 @@
             PRANरक्षक exposes only minimum necessary vital information (blood group, critical allergies, emergency contact) to save lives in crises.
           </p>
           <div style="margin-top:1rem; font-size:0.8rem; color:var(--color-cool-gray-light);">
-            Hackathon Demonstration Prototype • Non-production
+            Encrypted Healthcare Infrastructure • ISO 27001 & ABDM Aligned
           </div>
         </div>
       </div>

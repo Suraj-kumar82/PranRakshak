@@ -8,13 +8,54 @@ const ProfileManager = {
   allergiesList: [],
   medicinesList: [],
 
-  init() {
-    this.loadPatientData();
+  async init() {
+    await this.loadPatientData();
     this.bindEvents();
     this.setupUnsavedWarning();
   },
 
-  loadPatientData() {
+  async loadPatientData() {
+    try {
+      const res = await fetch('/api/patient/profile');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && data.patient) {
+          const p = data.patient;
+          const merged = {
+            ...DataManager.getPatient(),
+            id: p.id,
+            fullName: p.full_name || p.fullName,
+            email: p.email,
+            phone: p.phone,
+            dateOfBirth: p.date_of_birth || p.dateOfBirth,
+            age: p.age,
+            gender: p.gender,
+            address: p.address,
+            bloodGroup: p.blood_group || p.bloodGroup,
+            organDonor: p.organ_donor !== undefined ? p.organ_donor : p.organDonor,
+            allergies: p.allergies || [],
+            medicines: p.medicines || [],
+            conditions: p.conditions,
+            medicalHistory: p.medical_history || p.medicalHistory,
+            emergencyNotes: p.emergency_notes || p.emergencyNotes,
+            emergencyContacts: p.emergency_contacts || p.emergencyContacts || [],
+            heightCm: p.height_cm || p.heightCm,
+            weightKg: p.weight_kg || p.weightKg,
+            bmi: p.bmi,
+            mdr: p.mdr_status || p.mdr,
+            surgicalHistory: p.surgical_history || p.surgicalHistory,
+            transplantHistory: p.transplant_history || p.transplantHistory,
+            drugToxicity: p.drug_toxicity || p.drugToxicity,
+            medicalInsurance: p.medical_insurance || p.medicalInsurance,
+            qrCodeBase64: p.qr_code_base64
+          };
+          DataManager.savePatient(merged);
+        }
+      }
+    } catch (e) {
+      console.warn('Backend profile fetch error, fallback to local:', e);
+    }
+
     const patient = DataManager.getPatient();
     if (!patient) return;
 
@@ -314,9 +355,54 @@ const ProfileManager = {
     patient.allergies = this.allergiesList;
     patient.medicines = this.medicinesList;
 
-    // Persist
+    // Persist to local data
     DataManager.savePatient(patient);
     this.clearDirty();
+
+    // Persist to Flask SQLite backend & regenerate Smart QR Code
+    try {
+      const res = await fetch('/api/patient/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: patient.fullName,
+          email: patient.email,
+          phone: patient.phone,
+          dateOfBirth: patient.dateOfBirth,
+          age: DataManager.calculateAge(patient.dateOfBirth) || patient.age,
+          gender: patient.gender,
+          address: patient.address,
+          bloodGroup: patient.bloodGroup,
+          organDonor: patient.organDonor,
+          allergies: patient.allergies,
+          medicines: patient.medicines,
+          conditions: patient.conditions,
+          medicalHistory: patient.medicalHistory,
+          emergencyNotes: patient.emergencyNotes,
+          emergencyContacts: patient.emergencyContacts || [],
+          heightCm: parseFloat(height) || 175,
+          weightKg: parseFloat(weight) || 72,
+          bmi: patient.bmi,
+          mdrStatus: patient.mdr,
+          surgicalHistory: patient.surgicalHistory,
+          transplantHistory: patient.transplantHistory,
+          drugToxicity: patient.drugToxicity,
+          medicalInsurance: patient.medicalInsurance
+        })
+      });
+
+      const resData = await res.json();
+      if (resData.success && resData.qrCodeBase64) {
+        patient.qrCodeBase64 = resData.qrCodeBase64;
+        DataManager.savePatient(patient);
+        UI.showToast('Medical details saved & Smart QR Code regenerated via Python backend!', 'success', 'Saved & QR Updated');
+      } else {
+        UI.showToast('Medical profile updated and synchronized with Emergency QR card.', 'success', 'Profile Saved');
+      }
+    } catch (e) {
+      console.warn('Backend sync failed, saved locally:', e);
+      UI.showToast('Profile saved locally.', 'info');
+    }
 
     if (andSyncWebhook) {
       const payload = {
@@ -339,10 +425,7 @@ const ProfileManager = {
         medical_insurance: patient.medicalInsurance,
         submitted_at: new Date().toISOString()
       };
-      const res = await DataManager.sendToN8nWebhook(payload);
-      UI.showToast('Profile saved & synchronized to n8n webhook!', 'success', 'n8n Webhook Delivered');
-    } else {
-      UI.showToast('Medical profile updated and synchronized with Emergency QR card.', 'success', 'Profile Saved');
+      await DataManager.sendToN8nWebhook(payload);
     }
   }
 };
